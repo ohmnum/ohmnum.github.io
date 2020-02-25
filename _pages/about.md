@@ -7,7 +7,7 @@ layout: single
 ## 이 블로그란?
 
 PHM(Prognostics and Health Management) 과 관련된 여러 이론들에 대해서 공부한 내용들을 끄적여 놓은 블로그
-
+    
 포스팅할 세부분야는 다음과 같다
 
 1. PHM 이론
