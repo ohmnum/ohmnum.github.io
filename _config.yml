@@ -124,7 +124,7 @@ author:
       # url: "https://twitter.com/"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      url: "https://facebook.com/hyungminkim"
+      url: "https://www.facebook.com/hyungmin.kim.710"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ohmnum"
@@ -137,7 +137,7 @@ footer:
   links:
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      url: "https://facebook.com/hyungminkim"
+      url: "https://www.facebook.com/hyungmin.kim.710"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ohmnum"
@@ -278,7 +278,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
 
