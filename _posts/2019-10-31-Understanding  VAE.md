@@ -2,6 +2,10 @@
 title: "Variational AutoEncoder(VAE) 이해"
 categories: 
   - Medium 칼럼 정리
+
+tags: Medium
+use_math: true
+
 toc: true
 ---
 **Copyright of Image** : Joseph Rocca 
