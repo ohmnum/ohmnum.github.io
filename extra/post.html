@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Archived note from Hyeongmin Kim." />
+    <title>Extra Note - Hyeongmin Kim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+        },
+        svg: { fontCache: "global" },
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../index.html" aria-label="Hyeongmin Kim home">
+        <span class="brand-mark">HK</span>
+        <span>Hyeongmin Kim</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="../index.html#research">Research</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#publications">Publications</a>
+        <a href="./">Extra</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="post-page">
+      <section class="section post-shell">
+        <a class="back-link" href="./">Back to extra archive</a>
+        <article class="markdown-article">
+          <p class="eyebrow">Loading archived note</p>
+          <h1>Preparing markdown...</h1>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>&copy; <span id="year"></span> Hyeongmin Kim</span>
+      <a href="./">Extra archive</a>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+      const article = document.querySelector(".markdown-article");
+      const params = new URLSearchParams(window.location.search);
+      const file = params.get("file");
+
+      function escapeHtml(value) {
+        return value.replace(/[&<>"']/g, (character) => {
+          const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;",
+          };
+          return entities[character];
+        });
+      }
+
+      function splitFrontMatter(markdown) {
+        const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+        if (!match) {
+          return { meta: {}, body: markdown };
+        }
+
+        const meta = {};
+        match[1].split(/\r?\n/).forEach((line) => {
+          const pair = line.match(/^([^:]+):\s*(.*)$/);
+          if (pair) {
+            meta[pair[1].trim()] = pair[2].trim().replace(/^"|"$/g, "");
+          }
+        });
+
+        return {
+          meta,
+          body: markdown.slice(match[0].length),
+        };
+      }
+
+      function titleFromFile(path) {
+        return decodeURIComponent(path)
+          .replace(/^posts\//, "")
+          .replace(/\.md$/i, "")
+          .replace(/^\d{4}-\d{2}-\d{2}-\s*/, "")
+          .replace(/_/g, " ")
+          .trim();
+      }
+
+      async function renderPost() {
+        if (!file || !file.startsWith("posts/") || !file.endsWith(".md")) {
+          article.innerHTML = `
+            <p class="eyebrow">Archive error</p>
+            <h1>Post not found.</h1>
+            <p>The archive link is missing a valid markdown file.</p>
+          `;
+          return;
+        }
+
+        try {
+          const response = await fetch(encodeURI(file));
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const markdown = await response.text();
+          const { meta, body } = splitFrontMatter(markdown);
+          const title = meta.title || titleFromFile(file);
+          const date = file.match(/posts\/(\d{4}-\d{2}-\d{2})-/)?.[1] || "Archive";
+
+          document.title = `${title} - Hyeongmin Kim`;
+          marked.setOptions({
+            breaks: true,
+            gfm: true,
+            mangle: false,
+            headerIds: false,
+          });
+
+          article.innerHTML = `
+            <p class="eyebrow">${escapeHtml(date)}</p>
+            <h1>${escapeHtml(title)}</h1>
+            <div class="markdown-body">${marked.parse(body)}</div>
+          `;
+
+          if (window.MathJax?.typesetPromise) {
+            await window.MathJax.typesetPromise([article]);
+          }
+        } catch (error) {
+          article.innerHTML = `
+            <p class="eyebrow">Archive error</p>
+            <h1>Could not load this note.</h1>
+            <p>${escapeHtml(error.message)}</p>
+          `;
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", renderPost);
+    </script>
+  </body>
+</html>
