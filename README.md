@@ -1,21 +1,25 @@
----
-title: "끄적끄적"
-permalink: /about/
-layout: single
----
+# Hyeongmin Kim Homepage
 
-## 끄적끄적?
+Static personal homepage for GitHub Pages.
 
-**PHM(Prognostics and Health Management)** 과 관련된 여러 분야들에 대해서 공부한 내용들을 끄적여 놓은 블로그입니다.
+## Local preview
 
-다음 분야들에 대해서 스터디 한 내용들이 포스팅됩니다.
+Open `index.html` in a browser.
 
-### **1. PHM 이론 **
-### **2. Machine/Deep Learning 관련 스터디 내용 **
-### **3. Signal Processing 관련 스터디 내용 **
-### **4. Motor Control 관련 스터디 내용 **
+The previous `ohmnum.github.io` posts are preserved under `extra/posts`, with
+an archive page at `extra/index.html`. The `.nojekyll` file keeps GitHub Pages
+from trying to process those old markdown files as a Jekyll site.
 
+## GitHub Pages setup
 
-깃허브 블로그 제작은 https://devinlife.com 을 참고하였음
+1. Create a repository named `ohmnum.github.io` under the `ohmnum` GitHub account.
+2. Push these files to the repository's `main` branch.
+3. In GitHub, go to `Settings > Pages`.
+4. Set the source to `Deploy from a branch`, then choose `main` and `/root`.
+5. Keep the `CNAME` file for `www.hyeongminkim.com`.
 
-테마-jeykell Minimal-mistakes
+## To customize
+
+- Replace placeholder links for Google Scholar and CV in `index.html`.
+- Add `assets/cv.pdf` if you want a downloadable CV.
+- Update project and publication entries as the site evolves.

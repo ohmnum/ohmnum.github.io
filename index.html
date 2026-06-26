@@ -1,4 +1,221 @@
----
-layout: home
-author_profile: true
----
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Hyeongmin Kim's personal homepage for research, engineering, publications, and projects."
+    />
+    <title>Hyeongmin Kim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Hyeongmin Kim home">
+        <span class="brand-mark">HK</span>
+        <span>Hyeongmin Kim</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="extra/">Extra</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <p class="eyebrow">AI Researcher / Engineering Systems</p>
+          <h1>Building domain-informed AI for engineering design and decision-making.</h1>
+          <p class="intro">
+            I work on AI systems that combine engineering knowledge, data-driven
+            modeling, knowledge graphs, and large language models to support
+            design, diagnosis, and technical reasoning.
+          </p>
+          <div class="actions" aria-label="Profile links">
+            <a class="button primary" href="https://github.com/ohmnum">GitHub</a>
+            <a class="button" href="#publications">Publications</a>
+            <a class="button" href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <aside class="research-visual" aria-label="Research theme map">
+          <div class="node node-main">Engineering AI</div>
+          <div class="node node-a">LLM Agents</div>
+          <div class="node node-b">Knowledge Graphs</div>
+          <div class="node node-c">PHM</div>
+          <div class="node node-d">Design Automation</div>
+          <svg class="lines" viewBox="0 0 420 360" aria-hidden="true">
+            <path d="M210 178 L84 82" />
+            <path d="M210 178 L332 82" />
+            <path d="M210 178 L78 282" />
+            <path d="M210 178 L338 280" />
+            <path d="M84 82 C170 42 248 42 332 82" />
+            <path d="M78 282 C162 330 252 330 338 280" />
+          </svg>
+        </aside>
+      </section>
+
+      <section class="section split" id="about">
+        <div>
+          <p class="section-label">About</p>
+          <h2>Research shaped by real engineering constraints.</h2>
+        </div>
+        <div class="section-body">
+          <p>
+            My work sits between mechanical engineering, artificial intelligence,
+            and human-centered technical workflows. I am especially interested in
+            AI that does not only predict, but also explains, structures, and
+            collaborates with engineers.
+          </p>
+          <p>
+            This site is being rebuilt as a concise home for my research themes,
+            selected projects, publications, and professional links.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="research">
+        <div class="section-heading">
+          <p class="section-label">Research</p>
+          <h2>Focus areas</h2>
+        </div>
+        <div class="focus-grid">
+          <article class="focus-item">
+            <span>01</span>
+            <h3>Domain-informed neural networks</h3>
+            <p>
+              Integrating physical rules, engineering priors, and learned models
+              for robust prediction and interpretation.
+            </p>
+          </article>
+          <article class="focus-item">
+            <span>02</span>
+            <h3>Knowledge graphs for engineering</h3>
+            <p>
+              Structuring technical knowledge so machines can retrieve, connect,
+              and reason over design information.
+            </p>
+          </article>
+          <article class="focus-item">
+            <span>03</span>
+            <h3>LLM and RAG applications</h3>
+            <p>
+              Building language-model workflows that support engineering search,
+              documentation, and decision assistance.
+            </p>
+          </article>
+          <article class="focus-item">
+            <span>04</span>
+            <h3>Prognostics and health management</h3>
+            <p>
+              Applying AI to system monitoring, degradation understanding, and
+              reliable maintenance decisions.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="section-heading">
+          <p class="section-label">Projects</p>
+          <h2>Selected work</h2>
+        </div>
+        <div class="project-list">
+          <article class="project-item">
+            <div>
+              <h3>Engineering RAG Assistant</h3>
+              <p>
+                A retrieval-augmented workflow for navigating technical documents,
+                design constraints, and domain-specific reasoning paths.
+              </p>
+            </div>
+            <a href="https://github.com/ohmnum">View GitHub</a>
+          </article>
+          <article class="project-item">
+            <div>
+              <h3>AI-driven Design Exploration</h3>
+              <p>
+                Methods for using learning-based models and structured knowledge
+                to accelerate design ideation and evaluation.
+              </p>
+            </div>
+            <a href="#contact">Discuss</a>
+          </article>
+          <article class="project-item">
+            <div>
+              <h3>PHM Modeling</h3>
+              <p>
+                Data-driven and hybrid methods for understanding system condition,
+                degradation, and maintenance-relevant signals.
+              </p>
+            </div>
+            <a href="#publications">Related papers</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="publications">
+        <div class="section-heading">
+          <p class="section-label">Publications</p>
+          <h2>Publications and CV</h2>
+        </div>
+        <div class="publication-panel">
+          <p>
+            Add selected papers here, or link this section directly to Google
+            Scholar. A compact publication list usually works best for a personal
+            homepage: title, venue, year, and one link.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#">Google Scholar</a>
+            <a class="button" href="#">Download CV</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section split extra-callout" id="extra">
+        <div>
+          <p class="section-label">Extra</p>
+          <h2>Older notes, study logs, and technical writing.</h2>
+        </div>
+        <div class="section-body">
+          <p>
+            I kept the earlier GitHub Pages posts as an archive instead of
+            mixing them into the main research homepage. They live in a separate
+            extra section for lecture notes, study notes, and older technical
+            writing.
+          </p>
+          <a class="button" href="extra/">Open extra archive</a>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact">
+        <div>
+          <p class="section-label">Contact</p>
+          <h2>Let's connect.</h2>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:hello@hyeongminkim.com">hello@hyeongminkim.com</a>
+          <a href="https://github.com/ohmnum">github.com/ohmnum</a>
+          <a href="https://www.hyeongminkim.com">www.hyeongminkim.com</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>&copy; <span id="year"></span> Hyeongmin Kim</span>
+      <a href="#top">Back to top</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
