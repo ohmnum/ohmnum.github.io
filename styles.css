@@ -79,9 +79,8 @@ a {
 }
 
 .mascot-mark img {
-  height: 28px;
-  image-rendering: pixelated;
-  width: 28px;
+  height: 30px;
+  width: 30px;
 }
 
 .nav {
@@ -245,29 +244,6 @@ h3 {
   width: 100%;
 }
 
-.mascot-bubble {
-  align-items: center;
-  background: #fff8d8;
-  border: 1px solid #f0d260;
-  border-radius: 8px;
-  box-shadow: 0 14px 28px rgba(28, 29, 32, 0.14);
-  display: flex;
-  height: 78px;
-  justify-content: center;
-  padding: 8px;
-  position: absolute;
-  right: 18px;
-  top: 18px;
-  width: 78px;
-  z-index: 2;
-}
-
-.mascot-bubble img {
-  height: 58px;
-  image-rendering: pixelated;
-  width: 58px;
-}
-
 .profile-card div {
   padding: 24px;
 }
@@ -383,7 +359,6 @@ h3 {
   border: 1px solid #f0d260;
   border-radius: 8px;
   height: 42px;
-  image-rendering: pixelated;
   padding: 5px;
   width: 42px;
 }
