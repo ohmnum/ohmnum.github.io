@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Hyeongmin Kim's personal homepage for research, engineering, publications, and projects."
+      content="Hyeongmin Kim's personal homepage for research in domain-informed AI, PHM, AI-driven design, and LLM applications in engineering."
     />
     <title>Hyeongmin Kim</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,63 +23,64 @@
         <span>Hyeongmin Kim</span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
         <a href="#research">Research</a>
-        <a href="#projects">Projects</a>
-        <a href="#publications">Publications</a>
+        <a href="#activities">Activities</a>
         <a href="extra/">Extra</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <main id="top">
-      <section class="hero section">
+      <section class="hero section profile-hero">
         <div class="hero-copy">
-          <p class="eyebrow">AI Researcher / Engineering Systems</p>
-          <h1>Building domain-informed AI for engineering design and decision-making.</h1>
+          <p class="eyebrow">Staff Engineer, Samsung Research</p>
+          <h1>Domain-informed AI for engineering systems.</h1>
           <p class="intro">
-            I work on AI systems that combine engineering knowledge, data-driven
-            modeling, knowledge graphs, and large language models to support
-            design, diagnosis, and technical reasoning.
+            I build AI methods that combine engineering domain knowledge,
+            structured knowledge graphs, large language models, and
+            retrieval-augmented generation to support design, diagnosis, and
+            decision-making.
           </p>
           <div class="actions" aria-label="Profile links">
-            <a class="button primary" href="https://github.com/ohmnum">GitHub</a>
-            <a class="button" href="#publications">Publications</a>
-            <a class="button" href="#contact">Contact</a>
+            <a class="button primary" href="mailto:960802@snu.ac.kr">Email</a>
+            <a class="button" href="https://drive.google.com/open?id=1pZIdu5Et94BT-5j7xlEj9r-TSeLnlFBB">CV</a>
+            <a class="button" href="https://scholar.google.com/citations?user=_s0irF0AAAAJ&hl=ko">Scholar</a>
+            <a class="button" href="https://www.linkedin.com/in/hyeongmin-kim-711463188/">LinkedIn</a>
           </div>
         </div>
 
-        <aside class="research-visual" aria-label="Research theme map">
-          <div class="node node-main">Engineering AI</div>
-          <div class="node node-a">LLM Agents</div>
-          <div class="node node-b">Knowledge Graphs</div>
-          <div class="node node-c">PHM</div>
-          <div class="node node-d">Design Automation</div>
-          <svg class="lines" viewBox="0 0 420 360" aria-hidden="true">
-            <path d="M210 178 L84 82" />
-            <path d="M210 178 L332 82" />
-            <path d="M210 178 L78 282" />
-            <path d="M210 178 L338 280" />
-            <path d="M84 82 C170 42 248 42 332 82" />
-            <path d="M78 282 C162 330 252 330 338 280" />
-          </svg>
+        <aside class="profile-card" aria-label="Profile summary">
+          <img src="assets/site/profile.jpg" alt="Portrait of Hyeongmin Kim" />
+          <div>
+            <h2>Hyeongmin Kim</h2>
+            <p>
+              B.S. Mechanical Engineering, Seoul National University. Ph.D. and
+              postdoctoral research at the Hyperautomation Artificial
+              Intelligence Laboratory, Seoul National University.
+            </p>
+          </div>
         </aside>
       </section>
 
       <section class="section split" id="about">
         <div>
           <p class="section-label">About</p>
-          <h2>Research shaped by real engineering constraints.</h2>
+          <h2>Research records from graduate and postdoctoral work.</h2>
         </div>
         <div class="section-body">
           <p>
-            My work sits between mechanical engineering, artificial intelligence,
-            and human-centered technical workflows. I am especially interested in
-            AI that does not only predict, but also explains, structures, and
-            collaborates with engineers.
+            This site records research conducted during my graduate and
+            postdoctoral studies. I received my B.S. in Mechanical Engineering
+            from Seoul National University in 2019 and continued my Ph.D. and
+            postdoctoral research at HAI LAB in Seoul, South Korea.
           </p>
           <p>
-            This site is being rebuilt as a concise home for my research themes,
-            selected projects, publications, and professional links.
+            My research has focused on integrating domain knowledge into
+            artificial intelligence. Building on this foundation, I now work on
+            refining domain knowledge into structured knowledge graphs and
+            integrating them with LLM and RAG techniques to develop intelligent
+            AI agents.
           </p>
         </div>
       </section>
@@ -87,98 +88,146 @@
       <section class="section" id="research">
         <div class="section-heading">
           <p class="section-label">Research</p>
-          <h2>Focus areas</h2>
+          <h2>Research areas</h2>
         </div>
-        <div class="focus-grid">
+
+        <div class="research-feature">
+          <article>
+            <p class="eyebrow">PHM</p>
+            <h3>Prognostics and Health Management</h3>
+            <p>
+              PHM monitors, evaluates, and predicts the health of mechanical,
+              electronic, and industrial systems. My PHM work has focused on
+              rotating machines and thermal power plants, with attention to
+              anomaly detection, diagnosis, analysis, prognosis, and maintenance
+              decision support.
+            </p>
+          </article>
+          <img src="assets/site/phm-cycle.jpg" alt="PHM cycle diagram" />
+        </div>
+
+        <div class="focus-grid detailed-grid">
           <article class="focus-item">
             <span>01</span>
-            <h3>Domain-informed neural networks</h3>
+            <h3>PHM</h3>
             <p>
-              Integrating physical rules, engineering priors, and learned models
-              for robust prediction and interpretation.
+              Fault diagnosis and predictive maintenance for rotating machines
+              and thermal power plants, including boiler tube leakage detection
+              and multichannel anomaly detection.
             </p>
           </article>
           <article class="focus-item">
             <span>02</span>
-            <h3>Knowledge graphs for engineering</h3>
+            <h3>Domain Knowledge Informed Neural Networks</h3>
             <p>
-              Structuring technical knowledge so machines can retrieve, connect,
-              and reason over design information.
+              Combining deep learning with engineering knowledge to improve
+              generalization, physical consistency, and interpretability.
             </p>
           </article>
           <article class="focus-item">
             <span>03</span>
-            <h3>LLM and RAG applications</h3>
+            <h3>AI-driven Design</h3>
             <p>
-              Building language-model workflows that support engineering search,
-              documentation, and decision assistance.
+              Applying AI to design generation, evaluation, and optimization,
+              including inverse modeling, reinforcement learning, and design
+              parameter optimization.
             </p>
           </article>
           <article class="focus-item">
             <span>04</span>
-            <h3>Prognostics and health management</h3>
+            <h3>LLM Applications in Engineering</h3>
             <p>
-              Applying AI to system monitoring, degradation understanding, and
-              reliable maintenance decisions.
+              Developing engineering datasets, multimodal workflows, and
+              domain-specialized LLM/RAG systems for design and signal analysis.
             </p>
           </article>
         </div>
-      </section>
 
-      <section class="section" id="projects">
-        <div class="section-heading">
-          <p class="section-label">Projects</p>
-          <h2>Selected work</h2>
-        </div>
-        <div class="project-list">
-          <article class="project-item">
-            <div>
-              <h3>Engineering RAG Assistant</h3>
-              <p>
-                A retrieval-augmented workflow for navigating technical documents,
-                design constraints, and domain-specific reasoning paths.
-              </p>
-            </div>
-            <a href="https://github.com/ohmnum">View GitHub</a>
-          </article>
-          <article class="project-item">
-            <div>
-              <h3>AI-driven Design Exploration</h3>
-              <p>
-                Methods for using learning-based models and structured knowledge
-                to accelerate design ideation and evaluation.
-              </p>
-            </div>
-            <a href="#contact">Discuss</a>
-          </article>
-          <article class="project-item">
-            <div>
-              <h3>PHM Modeling</h3>
-              <p>
-                Data-driven and hybrid methods for understanding system condition,
-                degradation, and maintenance-relevant signals.
-              </p>
-            </div>
-            <a href="#publications">Related papers</a>
-          </article>
+        <div class="image-grid">
+          <figure>
+            <img src="assets/site/dinn-framework.jpg" alt="DINN framework diagram" />
+            <figcaption>Domain knowledge informed neural networks</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/site/llm-framework.jpg" alt="LLM engineering workflow diagram" />
+            <figcaption>Engineering LLM applications</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section class="section" id="publications">
+      <section class="section" id="activities">
         <div class="section-heading">
-          <p class="section-label">Publications</p>
-          <h2>Publications and CV</h2>
+          <p class="section-label">Activities</p>
+          <h2>Selected activities</h2>
         </div>
-        <div class="publication-panel">
-          <p>
-            Add selected papers here, or link this section directly to Google
-            Scholar. A compact publication list usually works best for a personal
-            homepage: title, venue, year, and one link.
-          </p>
-          <div class="actions">
-            <a class="button primary" href="#">Google Scholar</a>
-            <a class="button" href="#">Download CV</a>
-          </div>
+
+        <div class="activity-grid">
+          <article class="activity-item">
+            <img src="assets/site/acmso-2024.jpg" alt="ACSMO 2024 banner" />
+            <div>
+              <span>May 2024 · Zhengzhou, China</span>
+              <h3>ACSMO 2024</h3>
+              <p>
+                Window Size and Sampling Rate Selection for Cost-optimal Deep
+                Learning-based Fault Diagnosis.
+              </p>
+            </div>
+          </article>
+          <article class="activity-item">
+            <img src="assets/site/idetc-2023.jpg" alt="ASME IDETC-CIE 2023 banner" />
+            <div>
+              <span>August 2023 · Boston, USA</span>
+              <h3>ASME-IDETC 2023</h3>
+              <p>
+                Convolutional Auto-Encoder-Based Boiler Tube Leakage Detection
+                Method in a Thermal Power Plant.
+              </p>
+            </div>
+          </article>
+          <article class="activity-item">
+            <img src="assets/site/idetc-2022.jpg" alt="ASME IDETC-CIE 2022 banner" />
+            <div>
+              <span>August 2022 · St. Louis, USA</span>
+              <h3>ASME-IDETC 2022</h3>
+              <p>
+                A Multi-scale Residual Network with Attention Mechanism for
+                Fault Diagnosis of Rotating Machines.
+              </p>
+            </div>
+          </article>
+          <article class="activity-item">
+            <img src="assets/site/iceas-2022.jpg" alt="ICEAS 2022 banner" />
+            <div>
+              <span>August 2022 · Ansan, South Korea</span>
+              <h3>ICEAS 2022</h3>
+              <p>
+                Reinforcement Learning-based Optimal Parameter Estimation of
+                Ultra Precision Machine.
+              </p>
+            </div>
+          </article>
+          <article class="activity-item">
+            <img src="assets/site/phmap-2021.jpg" alt="PHMAP 2021 banner" />
+            <div>
+              <span>September 2021 · Jeju, South Korea</span>
+              <h3>PHMAP 2021</h3>
+              <p>
+                Anomaly Detection of Multichannel Complex Industrial Systems
+                using Physically Grouped Convolutional Autoencoder.
+              </p>
+            </div>
+          </article>
+          <article class="activity-item">
+            <img src="assets/site/fraunhofer.jpg" alt="Fraunhofer IPT building" />
+            <div>
+              <span>June 2022 - August 2022 · Aachen, Germany</span>
+              <h3>Visiting Scholar, Fraunhofer IPT</h3>
+              <p>
+                Collaborative research on inverse modeling and reinforcement
+                learning for design parameter optimization in manufacturing.
+              </p>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -189,10 +238,8 @@
         </div>
         <div class="section-body">
           <p>
-            I kept the earlier GitHub Pages posts as an archive instead of
-            mixing them into the main research homepage. They live in a separate
-            extra section for lecture notes, study notes, and older technical
-            writing.
+            Earlier GitHub Pages posts are preserved as a separate archive with
+            markdown, math, and images rendered in-page.
           </p>
           <a class="button" href="extra/">Open extra archive</a>
         </div>
@@ -204,7 +251,8 @@
           <h2>Let's connect.</h2>
         </div>
         <div class="contact-links">
-          <a href="mailto:hello@hyeongminkim.com">hello@hyeongminkim.com</a>
+          <a href="mailto:960802@snu.ac.kr">960802@snu.ac.kr</a>
+          <a href="https://hai.snu.ac.kr/">Hyperautomation Artificial Intelligence Lab</a>
           <a href="https://github.com/ohmnum">github.com/ohmnum</a>
           <a href="https://www.hyeongminkim.com">www.hyeongminkim.com</a>
         </div>
