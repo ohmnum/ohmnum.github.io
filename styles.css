@@ -970,6 +970,99 @@ h3 {
   padding-top: 8px;
 }
 
+/* Neon Void side-project card */
+.neon-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(34, 231, 255, 0.32);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(34, 231, 255, 0.18), transparent 42%),
+    radial-gradient(circle at 88% 84%, rgba(255, 46, 147, 0.2), transparent 46%),
+    linear-gradient(135deg, #0b0922, #05030f 70%);
+  box-shadow: 0 24px 70px rgba(5, 3, 15, 0.35);
+  padding: clamp(28px, 5vw, 54px);
+}
+
+.neon-card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.neon-eyebrow {
+  color: #22e7ff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.neon-card h3 {
+  color: #fff;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+  text-shadow: 0 0 22px rgba(34, 231, 255, 0.45);
+}
+
+.neon-ver {
+  color: #ffcc33;
+  border: 1px solid rgba(255, 204, 51, 0.55);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-left: 10px;
+  padding: 3px 11px;
+  vertical-align: middle;
+}
+
+.neon-card p {
+  color: #9fb2d8;
+  line-height: 1.75;
+  margin-bottom: 26px;
+  max-width: 600px;
+}
+
+.neon-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.neon-btn {
+  align-items: center;
+  background: linear-gradient(90deg, #22e7ff, #ff2e93);
+  border-radius: 9px;
+  color: #05030f;
+  display: inline-flex;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  min-height: 50px;
+  padding: 0 28px;
+  box-shadow: 0 0 26px rgba(34, 231, 255, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.neon-btn:hover {
+  box-shadow: 0 0 34px rgba(255, 46, 147, 0.6);
+  transform: translateY(-2px);
+  color: #05030f;
+}
+
+.neon-link {
+  color: #22e7ff;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(34, 231, 255, 0.4);
+  padding-bottom: 2px;
+}
+
+.neon-link:hover {
+  color: #7ef0ff;
+}
+
 .count {
   background: rgba(15, 118, 110, 0.1);
   border: 1px solid rgba(15, 118, 110, 0.28);
