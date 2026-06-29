@@ -349,7 +349,7 @@ const EDEF={
  striker: {hp:3, r:0.95,spd:1.2, score:32,beh:'strafe',wpn:'fast',  gap:1.2,col:0xffe23a},
  missiler:{hp:4, r:1.05,spd:0.8, score:40,beh:'drift', wpn:'homing',gap:2.3,col:0x9b6bff},
  charger: {hp:7, r:1.15,spd:0.5, score:55,beh:'slow',  wpn:'charge',gap:2.6,col:0xff5a3c},
- brute:   {hp:18,r:1.7, spd:0.7, score:70,beh:'drift', wpn:null,           col:0x6a6480},
+ brute:   {hp:9, r:1.7, spd:0.7, score:70,beh:'drift', wpn:null,           col:0x6a6480},
  weaver:  {hp:2, r:0.9, spd:1.15,score:28,beh:'weave', wpn:'laser3',gap:1.8,col:0x49e0c0},
  splitter:{hp:5, r:1.2, spd:0.85,score:42,beh:'drift', wpn:null, split:true,col:0xffae5a},
  turret:  {hp:11,r:1.3, spd:0.55,score:58,beh:'slow',  wpn:'spread3',gap:1.6,col:0xff9a3c},
@@ -377,7 +377,8 @@ function poolForStage(s){
   if(s>=16) return ['seeker','gunner','striker','missiler','charger','weaver','turret','phantom','brute'];
   if(s>=11) return ['seeker','gunner','striker','missiler','weaver','splitter','turret','brute'];
   if(s>=6)  return ['seeker','gunner','striker','weaver','splitter','brute'];
-  return ['seeker','gunner','brute','weaver'];
+  if(s>=3)  return ['seeker','gunner','brute','weaver'];
+  return ['seeker','gunner','weaver'];
 }
 function makeEnemy(type,forced){
   if(bossActive && !forced) return;
