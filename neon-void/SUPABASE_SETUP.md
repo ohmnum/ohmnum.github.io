@@ -43,7 +43,10 @@ the table safe (reads + inserts only, with value limits; no updates or deletes).
 ## 3. Get your keys
 **Project Settings → API**, copy:
 - **Project URL** → e.g. `https://abcdefgh.supabase.co`
-- **Project API keys → `anon` `public`**
+- The public client key. On newer projects this is the **Publishable key**
+  (`sb_publishable_…`); on older ones it is the **`anon` `public`** key
+  (`eyJ…`). Either works — both are safe to expose and act as the `anon`
+  role, so the RLS policies above are what protect the table.
 
 ## 4. Plug them into the game
 Open `neon-void/index.html`, find `LB_CONFIG` near the top of the `<script>`,
