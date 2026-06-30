@@ -123,70 +123,73 @@
             <p class="section-label">Research</p>
             <h2>What I Work On</h2>
           </div>
+          <a class="button" href="publications.html">All publications</a>
         </div>
 
-        <div class="focus-grid detailed-grid">
-          <article class="focus-item">
-            <span>01</span>
-            <h3>Prognostics and Health Management</h3>
-            <p>
-              Fault diagnosis, anomaly detection, and predictive maintenance for
-              rotating machines, thermal power plants, and complex industrial
-              systems.
-            </p>
+        <p class="research-lead">
+          A recurring theme in my work: engineering AI shouldn&rsquo;t stop at a
+          single number. It should expose useful structure &mdash; which signals
+          matter, which physical constraints hold, and how an engineer can act on
+          the result.
+        </p>
+
+        <div class="research-grid">
+          <article class="research-area">
+            <span class="ra-num">01</span>
+            <h3>Prognostics &amp; Health Management</h3>
+            <p>Fault diagnosis, anomaly detection, and predictive maintenance for rotating machines and thermal power plants.</p>
+            <ul class="ra-projects">
+              <li>
+                <a href="https://www.sciencedirect.com/science/article/pii/S0263224123010102">SCOC &mdash; preprocessing for motor fault diagnosis under variable conditions</a>
+                <span class="ra-tag pub">Measurement &rsquo;23</span>
+              </li>
+              <li>
+                <span>MPARN &mdash; multi-scale path attention residual network</span>
+                <span class="ra-tag pub">JCDE &rsquo;23</span>
+              </li>
+              <li>
+                <a href="https://www.sciencedirect.com/science/article/pii/S0957417422023958">Opt-TCAE &mdash; boiler-tube leakage detection in thermal plants</a>
+                <span class="ra-tag pub">ESWA &rsquo;23</span>
+              </li>
+              <li>
+                <span>Uncertainty-aware diagnosis of unseen faults</span>
+                <span class="ra-tag">under review</span>
+              </li>
+            </ul>
           </article>
-          <article class="focus-item">
-            <span>02</span>
+
+          <article class="research-area">
+            <span class="ra-num">02</span>
             <h3>Domain Knowledge Informed Neural Networks</h3>
-            <p>
-              Neural networks that use physics, signal analysis, expert rules,
-              or structured domain priors to improve generalization and
-              interpretability.
-            </p>
+            <p>Networks guided by physics, signal analysis, and expert priors &mdash; for generalization, physical consistency, and interpretability.</p>
+            <ul class="ra-projects">
+              <li><span>DINN review &mdash; survey of domain-informed PHM methods</span><span class="ra-tag">in progress</span></li>
+              <li><span>Physically-consistent models (PINN-style losses)</span><span class="ra-tag">theme</span></li>
+              <li><span>Interpretable inputs (2D time&ndash;frequency maps)</span><span class="ra-tag">theme</span></li>
+            </ul>
           </article>
-          <article class="focus-item">
-            <span>03</span>
+
+          <article class="research-area">
+            <span class="ra-num">03</span>
             <h3>AI-driven Design</h3>
-            <p>
-              AI methods for design generation, performance prediction, inverse
-              modeling, reinforcement learning, and design parameter
-              optimization.
-            </p>
+            <p>Generative design, performance prediction, and parameter / topology optimization via inverse modeling and reinforcement learning.</p>
+            <ul class="ra-projects">
+              <li><span>Inverse modeling of springback in metal bipolar-plate stamping</span><span class="ra-tag">Fraunhofer IPT</span></li>
+              <li><span>Design evaluation with PINNs &amp; explainable AI</span><span class="ra-tag">theme</span></li>
+              <li><span>RL-based design-parameter optimization</span><span class="ra-tag">theme</span></li>
+            </ul>
           </article>
-          <article class="focus-item">
-            <span>04</span>
+
+          <article class="research-area">
+            <span class="ra-num">04</span>
             <h3>LLM Applications in Engineering</h3>
-            <p>
-              Engineering datasets, knowledge graphs, RAG workflows, and LLM
-              agents that can support design reasoning, signal analysis, and
-              physical validity checking.
-            </p>
+            <p>Domain-specialized LLMs, knowledge graphs, and RAG workflows for engineering design and signal analysis.</p>
+            <ul class="ra-projects">
+              <li><span>LLM-based engineering design framework</span><span class="ra-tag">in development</span></li>
+              <li><span>KG-RAG-LLM for PHM &mdash; graph-grounded, continuously validated</span><span class="ra-tag">research</span></li>
+              <li><span>Multi-modal LLM for CAD / simulation / sensor data</span><span class="ra-tag">research</span></li>
+            </ul>
           </article>
-        </div>
-
-        <div class="research-feature">
-          <article>
-            <p class="eyebrow">Research Thread</p>
-            <h3>Making AI less black-box for engineering problems.</h3>
-            <p>
-              A recurring theme in my work is that engineering AI should not
-              stop at numerical prediction. It should expose useful structure:
-              what signal patterns matter, which physical constraints are being
-              respected, and how a human engineer can use the result.
-            </p>
-          </article>
-          <img src="assets/site/dinn-framework.jpg" alt="DINN framework diagram" />
-        </div>
-
-        <div class="image-grid">
-          <figure>
-            <img src="assets/site/phm-cycle.jpg" alt="PHM cycle diagram" />
-            <figcaption>PHM for industrial systems</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/site/llm-framework.jpg" alt="LLM engineering workflow diagram" />
-            <figcaption>LLM workflows for engineering design</figcaption>
-          </figure>
         </div>
       </section>
 

@@ -511,6 +511,18 @@ h3 {
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.activity-item:hover,
+.image-grid figure:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.image-grid figure {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .activity-item img {
@@ -973,6 +985,122 @@ h3 {
   padding-top: 8px;
 }
 
+/* Research showcase */
+.research-lead {
+  color: var(--muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+  margin: -8px 0 28px;
+  max-width: 760px;
+}
+
+.research-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.research-area {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 28px;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.research-area::before {
+  background: linear-gradient(90deg, var(--accent), var(--rust));
+  content: "";
+  height: 3px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 0.15s ease;
+}
+
+.research-area:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.research-area:hover::before {
+  opacity: 1;
+}
+
+.ra-num {
+  color: var(--rust);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.research-area h3 {
+  margin: 10px 0 8px;
+}
+
+.research-area > p {
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.ra-projects {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 11px;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 16px 0 0;
+}
+
+.ra-projects li {
+  align-items: baseline;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.ra-projects li > span:first-child,
+.ra-projects li > a {
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.ra-projects a {
+  color: var(--accent-strong);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ra-projects a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ra-tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 2px 9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ra-tag.pub {
+  background: rgba(15, 118, 110, 0.08);
+  border-color: rgba(15, 118, 110, 0.3);
+  color: var(--accent-strong);
+}
+
 /* Compact career & education layout with logo chips */
 .cv-cols {
   display: grid;
@@ -1271,6 +1399,10 @@ h3 {
 
   .activity-grid,
   .image-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .research-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
