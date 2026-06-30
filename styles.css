@@ -973,6 +973,100 @@ h3 {
   padding-top: 8px;
 }
 
+/* Compact career & education layout with logo chips */
+.cv-cols {
+  display: grid;
+  gap: 28px 48px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cv-h {
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.cv-block .cv-h:not(:first-child) {
+  margin-top: 26px;
+}
+
+.cv-list {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-row {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  padding: 10px 12px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.cv-row:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--line);
+}
+
+.cv-logo {
+  align-items: center;
+  background: var(--c, var(--ink));
+  border-radius: 11px;
+  box-shadow: 0 4px 14px rgba(28, 29, 33, 0.16);
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-weight: 800;
+  font-size: 1.05rem;
+  height: 44px;
+  justify-content: center;
+  letter-spacing: 0.01em;
+  width: 44px;
+}
+
+.cv-logo.sm {
+  font-size: 0.72rem;
+}
+
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cv-main strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.cv-main > span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-when {
+  color: var(--rust);
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
 /* Neon Void compact teaser in the hero */
 .neon-mini {
   align-items: center;
@@ -1006,10 +1100,15 @@ h3 {
   color: #05030f;
   display: inline-flex;
   flex: 0 0 auto;
-  font-size: 13px;
   height: 34px;
   justify-content: center;
   width: 34px;
+}
+
+.nm-play svg {
+  width: 19px;
+  height: 19px;
+  display: block;
 }
 
 .nm-text {
@@ -1208,6 +1307,11 @@ h3 {
   }
 
   .focus-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cv-cols {
+    gap: 22px;
     grid-template-columns: minmax(0, 1fr);
   }
 

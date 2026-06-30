@@ -96,6 +96,11 @@
     text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px}
   .lb-scope{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.12em;color:#7c8bb0;
     border:1px solid rgba(120,140,180,.4);border-radius:6px;padding:1px 6px}
+  .lb-ver{margin-left:auto;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);
+    background:rgba(34,231,255,.08);border:1px solid rgba(34,231,255,.35);border-radius:7px;padding:2px 6px;cursor:pointer;outline:none}
+  .lb-ver option{background:#0a0d1b;color:#e8f6ff}
+  .lb-list li .nm .vt{margin-left:7px;font-family:'Share Tech Mono',monospace;font-size:9px;color:#7c8bb0;
+    border:1px solid rgba(120,140,180,.35);border-radius:5px;padding:0 5px;vertical-align:middle}
   .lb-form{display:flex;gap:8px;margin-bottom:8px}
   .lb-name{flex:1;min-width:0;background:rgba(34,231,255,.06);border:1px solid rgba(34,231,255,.35);border-radius:8px;
     color:#e8f6ff;font-family:'Share Tech Mono',monospace;font-size:14px;padding:0 12px;height:40px;outline:none}
@@ -213,6 +218,7 @@ const LB_CONFIG = {
   TABLE: "neon_void_scores",
   TOP_N: 10,
 };
+const APP_VERSION = "v1.0.1";
 
 const app=document.getElementById('app');
 const stage=document.getElementById('stage');
@@ -300,7 +306,7 @@ let owned=[]; const itemCounts={}; let maxLives=3;
 function recompute(){
   stats.damage=1; stats.cooldown=0.13; stats.bulletSpeed=1.5; stats.shots=1; stats.pierce=0;
   stats.bulletR=0.5; stats.crit=0; stats.homing=0; stats.moveMul=1; stats.pickupR=1.4;
-  stats.dropChance=0.12; stats.scoreMul=1; stats.drones=0; stats.lifesteal=0; stats.fragment=0;
+  stats.dropChance=0.10; stats.scoreMul=1; stats.drones=0; stats.lifesteal=0; stats.fragment=0;
   stats.ebSlow=1; stats.shieldRegen=0; stats.maxLives=3; stats.cryo=0;
   for(const id of owned) ITEMS_BY_ID[id].mod(stats);
   stats.cooldown=Math.max(0.045,stats.cooldown);
@@ -560,6 +566,7 @@ const S={menu:0,playing:1,dead:2,paused:3}; let state=S.menu;
 let score=0,lives=3,wave=1,killsThisWave=0,killGoal=8;
 let combo=0,comboTimer=0,comboMult=1;
 let spawnTimer=0,spawnGap=1.2,enemySpeed=0.15;
+const SPAWN_CAP=18;
 const shipVel=new THREE.Vector2(0,0); let invuln=0;
 let shootCooldown=0,shake=0;
 let bossActive=false, hasShield=false, shieldChargeT=0;
@@ -572,18 +579,37 @@ const LB={
   on(){ return !!(LB_CONFIG.SUPABASE_URL && LB_CONFIG.SUPABASE_ANON_KEY); },
   _base(){ return LB_CONFIG.SUPABASE_URL.replace(/\/+$/,'')+'/rest/v1/'+LB_CONFIG.TABLE; },
   _hdr(){ return {apikey:LB_CONFIG.SUPABASE_ANON_KEY,Authorization:'Bearer '+LB_CONFIG.SUPABASE_ANON_KEY,'Content-Type':'application/json'}; },
-  async top(n){ n=n||LB_CONFIG.TOP_N;
+  async top(n,version){ n=n||LB_CONFIG.TOP_N;
     if(LB.on()){
-      const r=await fetch(LB._base()+'?select=name,score,wave&order=score.desc,created_at.asc&limit='+n,{headers:LB._hdr()});
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return await r.json();
+      const go=async(withVer)=>{
+        let q='?select=name,score,wave'+(withVer?',version':'')+'&order=score.desc,created_at.asc&limit='+n;
+        if(withVer&&version) q+='&version=eq.'+encodeURIComponent(version);
+        const r=await fetch(LB._base()+q,{headers:LB._hdr()});
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return await r.json();
+      };
+      try{ return await go(true); }catch(e){ return await go(false); } // version column may not exist yet
     }
-    const a=JSON.parse(lsGet('nv_lb_local')||'[]'); a.sort((x,y)=>y.score-x.score); return a.slice(0,n);
+    let a=JSON.parse(lsGet('nv_lb_local')||'[]');
+    if(version) a=a.filter(e=>(e.version||'')===version);
+    a.sort((x,y)=>y.score-x.score); return a.slice(0,n);
   },
-  async submit(e){ e={name:String(e.name||'PILOT').slice(0,14),score:e.score|0,wave:e.wave|0};
+  async versions(){
     if(LB.on()){
-      const r=await fetch(LB._base(),{method:'POST',headers:Object.assign({Prefer:'return=minimal'},LB._hdr()),body:JSON.stringify(e)});
-      if(!r.ok) throw new Error('HTTP '+r.status); return;
+      try{ const r=await fetch(LB._base()+'?select=version&limit=2000',{headers:LB._hdr()});
+        if(!r.ok) return []; const rows=await r.json();
+        return [...new Set(rows.map(x=>x.version).filter(Boolean))].sort().reverse();
+      }catch(e){ return []; }
+    }
+    const a=JSON.parse(lsGet('nv_lb_local')||'[]');
+    return [...new Set(a.map(x=>x.version).filter(Boolean))].sort().reverse();
+  },
+  async submit(e){ e={name:String(e.name||'PILOT').slice(0,14),score:e.score|0,wave:e.wave|0,version:e.version||APP_VERSION};
+    if(LB.on()){
+      const post=async(body)=>{ const r=await fetch(LB._base(),{method:'POST',headers:Object.assign({Prefer:'return=minimal'},LB._hdr()),body:JSON.stringify(body)}); if(!r.ok) throw new Error('HTTP '+r.status); };
+      try{ await post(e); }
+      catch(err){ await post({name:e.name,score:e.score,wave:e.wave}); } // retry without version if column missing
+      return;
     }
     const a=JSON.parse(lsGet('nv_lb_local')||'[]'); a.push(e); a.sort((x,y)=>y.score-x.score); lsSet('nv_lb_local',JSON.stringify(a.slice(0,100)));
   }
@@ -594,26 +620,38 @@ function mountLeaderboard(host,finalScore,finalWave){
   if(!host) return;
   host.innerHTML=
     '<div class="lb-panel">'+
-      '<div class="lb-head">LEADERBOARD <span class="lb-scope">'+(LB.on()?'GLOBAL':'LOCAL')+'</span></div>'+
+      '<div class="lb-head">LEADERBOARD <span class="lb-scope">'+(LB.on()?'GLOBAL':'LOCAL')+'</span>'+
+        '<select class="lb-ver" title="버전 필터"><option value="'+APP_VERSION+'">'+APP_VERSION+'</option></select></div>'+
       '<div class="lb-form"><input class="lb-name" maxlength="14" placeholder="콜사인 / ID" '+(lbSubmitted?'disabled':'')+'>'+
         '<button class="lb-send btn2">'+(lbSubmitted?'완료':'등록')+'</button></div>'+
       '<div class="lb-msg"></div>'+
       '<ol class="lb-list"><li class="lb-loading">불러오는 중…</li></ol>'+
     '</div>';
   const nameI=host.querySelector('.lb-name'),sendB=host.querySelector('.lb-send'),
-        msg=host.querySelector('.lb-msg'),list=host.querySelector('.lb-list');
+        msg=host.querySelector('.lb-msg'),list=host.querySelector('.lb-list'),verSel=host.querySelector('.lb-ver');
   nameI.value=lsGet('nv_name')||'';
   let myKey=null;
   function render(rows){
+    const showVer=(verSel.value==='__all__');
     if(!rows||!rows.length){ list.innerHTML='<li class="lb-empty">아직 기록이 없다 — 첫 주자가 되어라.</li>'; return; }
     list.innerHTML=rows.map((e,i)=>{
       const mine=myKey&&e.name===myKey.name&&(e.score|0)===myKey.score;
+      const vtag=showVer&&e.version?'<span class="vt">'+escHtml(e.version)+'</span>':'';
       return '<li class="'+(i===0?'top1 ':'')+(mine?'me':'')+'"><span class="r">'+(i+1)+'</span>'+
-             '<span class="nm">'+escHtml(e.name)+'</span><span class="sc">'+(e.score|0).toLocaleString()+'</span></li>';
+             '<span class="nm">'+escHtml(e.name)+vtag+'</span><span class="sc">'+(e.score|0).toLocaleString()+'</span></li>';
     }).join('');
   }
   function load(){ list.innerHTML='<li class="lb-loading">불러오는 중…</li>';
-    LB.top().then(render).catch(()=>{ list.innerHTML='<li class="lb-empty">랭킹을 불러오지 못했습니다.</li>'; }); }
+    const v=verSel.value==='__all__'?null:verSel.value;
+    LB.top(LB_CONFIG.TOP_N,v).then(render).catch(()=>{ list.innerHTML='<li class="lb-empty">랭킹을 불러오지 못했습니다.</li>'; }); }
+  verSel.onchange=load;
+  // populate version dropdown (current version preselected, "전체" + any others)
+  LB.versions().then(vs=>{
+    const set=[APP_VERSION,...vs.filter(v=>v!==APP_VERSION)];
+    verSel.innerHTML=set.map(v=>'<option value="'+escHtml(v)+'">'+escHtml(v)+'</option>').join('')+
+      '<option value="__all__">전체</option>';
+    verSel.value=APP_VERSION;
+  }).catch(()=>{});
   load();
   async function doSubmit(){
     if(lbSubmitted) return;
@@ -856,11 +894,11 @@ function update(dt){
 
   if(comboTimer>0){ comboTimer-=dt; if(comboTimer<=0){ combo=0; comboMult=1; } }
 
-  // spawn (stage pool)
+  // spawn (stage pool) — soft cap to avoid screen floods when DPS lags
   if(!bossActive){ spawnTimer-=dt;
-    if(spawnTimer<=0){ spawnTimer=spawnGap*(0.7+Math.random()*0.6); const pool=poolForStage(wave);
+    if(spawnTimer<=0 && enemies.length<SPAWN_CAP){ spawnTimer=spawnGap*(0.7+Math.random()*0.6); const pool=poolForStage(wave);
       makeEnemy(pool[Math.floor(Math.random()*pool.length)]);
-      if(wave>3 && Math.random()<0.4) makeEnemy(pool[Math.floor(Math.random()*pool.length)]); } }
+      if(wave>3 && Math.random()<0.4 && enemies.length<SPAWN_CAP) makeEnemy(pool[Math.floor(Math.random()*pool.length)]); } }
 
   // enemies
   for(let i=enemies.length-1;i>=0;i--){ const en=enemies[i],d=en.userData;

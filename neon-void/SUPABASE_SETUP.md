@@ -17,6 +17,7 @@ create table public.neon_void_scores (
   name       text    not null check (char_length(name) between 1 and 14),
   score      integer not null check (score >= 0 and score < 100000000),
   wave       integer not null default 0 check (wave between 0 and 100),
+  version    text    not null default 'v1.0.0',
   created_at timestamptz not null default now()
 );
 
@@ -63,6 +64,18 @@ const LB_CONFIG = {
 
 Commit & push. The game-over screen badge will switch from **LOCAL** to
 **GLOBAL** and scores will be shared by all players.
+
+## Already created the table before v1.0.1? Add the version column
+If your table predates per-version leaderboards, run this once:
+
+```sql
+alter table public.neon_void_scores
+  add column if not exists version text not null default 'v1.0.0';
+```
+
+The game tags every new score with its version and lets players filter the
+board by version. (The client also degrades gracefully if this column is
+missing — scores still save, just without a version tag.)
 
 ## Notes
 - To wipe the board: Supabase → Table Editor → delete rows (or `truncate public.neon_void_scores;`).
