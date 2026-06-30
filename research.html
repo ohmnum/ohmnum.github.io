@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Research details by Hyeongmin Kim — selected papers in PHM, domain-informed neural networks, AI-driven design, and LLM applications, explained plainly."
+      content="Research by Hyeongmin Kim — PHM, domain-informed neural networks, AI-driven design, and LLM applications in engineering, with key papers explained."
     />
     <title>Research - Hyeongmin Kim</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/site/ohmnum-32.png" />
@@ -42,8 +42,10 @@
         <p class="eyebrow"><a class="back-link" href="index.html">&larr; Home</a></p>
         <h1>Research</h1>
         <p class="intro">
-          A guided tour of what I work on, with the key papers behind each theme
-          explained in plain terms. The full list lives on the
+          My work connects mechanical/electrical systems with AI &mdash; from
+          prognostics &amp; health management to domain-informed neural networks,
+          AI-driven design, and LLM-based engineering workflows. Below is what
+          each theme means and the key papers behind it. The full list is on the
           <a class="inline-link" href="publications.html">publications</a> page.
         </p>
       </section>
@@ -53,45 +55,62 @@
         <article class="rd-area" id="phm">
           <div class="rd-head"><span class="ra-num">01</span><h2>Prognostics &amp; Health Management</h2></div>
           <p class="rd-blurb">
-            Detecting, diagnosing, and predicting faults in rotating machines,
-            motors, and thermal power plants &mdash; so failures are caught early
-            and maintenance happens before something breaks.
+            PHM monitors, evaluates, and predicts the health of mechanical,
+            electrical, and industrial systems &mdash; so faults are caught early,
+            reliability goes up, and maintenance happens before something breaks.
+            It was the core of my Ph.D., spanning motors, rotating machinery, and
+            thermal power plants.
           </p>
+          <ul class="rd-points">
+            <li><b>Why it matters</b> &mdash; predictive failure detection (cost savings), higher reliability, better operational efficiency.</li>
+            <li><b>How I approach it</b> &mdash; signal-aware preprocessing, deep representation learning, anomaly detection, and diagnosis that holds up under changing operating conditions.</li>
+          </ul>
+
+          <p class="rd-sub">Rotating machines &amp; motors</p>
           <ol class="paper-list">
             <li class="paper">
               <h3><a href="https://doi.org/10.1016/j.measurement.2023.113446">SCOC: Stator Current Operation Compensation for PMSM fault diagnosis</a></h3>
               <p class="paper-meta"><span class="ra-tag pub">Measurement &rsquo;23</span><span class="paper-role">First author</span></p>
-              <p class="paper-desc">A preprocessing step that compensates a motor&rsquo;s stator-current signals for changing speed and load, so a deep model can diagnose permanent-magnet synchronous motor (PMSM) faults reliably even under variable operating conditions.</p>
+              <p class="paper-desc">A preprocessing step that compensates a motor&rsquo;s stator-current signals for changing speed and load, so a deep model can diagnose permanent-magnet synchronous motor (PMSM) faults reliably under variable operating conditions.</p>
             </li>
             <li class="paper">
-              <h3><a href="https://doi.org/10.1093/jcde/qwad031">MPARN: Multi-scale Path Attention Residual Network for rotating machines</a></h3>
+              <h3><a href="https://doi.org/10.1093/jcde/qwad031">MPARN: Multi-scale Path Attention Residual Network</a></h3>
               <p class="paper-meta"><span class="ra-tag pub">JCDE &rsquo;23</span><span class="paper-role">First author</span></p>
-              <p class="paper-desc">A residual network with multi-scale paths and attention that captures fault signatures across different time scales, improving fault diagnosis of rotating machinery.</p>
+              <p class="paper-desc">A residual network with multi-scale paths and attention that captures fault signatures across different time scales, improving fault diagnosis of rotating machines.</p>
             </li>
             <li class="paper">
-              <h3><a href="https://doi.org/10.1016/j.eswa.2022.119377">Opt-TCAE: boiler-tube leakage detection in a thermal power plant</a></h3>
-              <p class="paper-meta"><span class="ra-tag pub">ESWA &rsquo;23</span><span class="paper-role">First author</span></p>
-              <p class="paper-desc">An unsupervised temporal convolutional auto-encoder that flags boiler-tube leaks from multi-sensor signals; the latent size is tuned by entropy minimization and the alarm threshold is set automatically via kernel density estimation.</p>
+              <h3><a href="https://doi.org/10.1093/jcde/qwag057">Center-margin loss: uncertainty-aware diagnosis of unseen faults</a></h3>
+              <p class="paper-meta"><span class="ra-tag pub">JCDE &rsquo;26</span><span class="paper-role">First author</span></p>
+              <p class="paper-desc">Adds uncertainty estimation and a center-margin loss so the model can flag novel, never-before-seen fault types instead of forcing them into known classes.</p>
             </li>
             <li class="paper">
-              <h3><a href="https://doi.org/10.1016/j.knosys.2024.111465">Self-supervised feature learning for motor fault diagnosis under various torque conditions</a></h3>
+              <h3><a href="https://doi.org/10.1016/j.engappai.2026.114197">Adapter-enhanced Fourier-feature DeepONet for fault-severity estimation</a></h3>
+              <p class="paper-meta"><span class="ra-tag pub">Eng. Appl. of AI &rsquo;26</span></p>
+              <p class="paper-desc">A deep operator network with Fourier features and adapters that estimates the <em>severity</em> of stator inter-turn short circuits in induction motors &mdash; moving from &ldquo;which fault&rdquo; to &ldquo;how bad&rdquo;, including severities not seen during training (simulation-assisted).</p>
+            </li>
+            <li class="paper">
+              <h3><a href="https://doi.org/10.1016/j.knosys.2024.111465">Self-supervised feature learning under various torque conditions</a></h3>
               <p class="paper-meta"><span class="ra-tag pub">Knowledge-Based Systems &rsquo;24</span></p>
               <p class="paper-desc">Self-supervised pre-training learns motor-fault representations without labels, so diagnosis stays accurate across a wide range of torque conditions with little labeled data.</p>
             </li>
             <li class="paper">
-              <h3><a href="https://doi.org/10.1093/jcde/qwaf058">FL-SSDAN: Fleet-level semi-supervised domain adaptation for overhead hoist transports</a></h3>
+              <h3><a href="https://doi.org/10.1093/jcde/qwaf058">FL-SSDAN: fleet-level semi-supervised domain adaptation</a></h3>
               <p class="paper-meta"><span class="ra-tag pub">JCDE &rsquo;25</span><span class="paper-role">Co-first author</span></p>
               <p class="paper-desc">Transfers fault knowledge across many overhead-hoist-transport units in a semiconductor fab using mostly unlabeled data, so a model trained on a few machines generalizes to the whole fleet.</p>
             </li>
             <li class="paper">
-              <h3><a href="https://doi.org/10.1093/jcde/qwag057">Center-margin loss, uncertainty-aware diagnosis for unseen faults</a></h3>
-              <p class="paper-meta"><span class="ra-tag pub">JCDE &rsquo;26</span><span class="ra-tag">accepted</span><span class="paper-role">First author</span></p>
-              <p class="paper-desc">Adds uncertainty estimation and a center-margin loss so the model can flag novel, never-before-seen fault types instead of forcing them into known classes.</p>
-            </li>
-            <li class="paper">
-              <h3><a href="https://doi.org/10.1016/j.engappai.2026.115273">Frequency-band graph-based sensor fusion for machinery fault diagnosis</a></h3>
+              <h3><a href="https://doi.org/10.1016/j.engappai.2026.115273">Frequency-band graph-based sensor fusion</a></h3>
               <p class="paper-meta"><span class="ra-tag pub">Eng. Appl. of AI &rsquo;26</span></p>
               <p class="paper-desc">Fuses multiple sensors on a frequency-band graph with a sensitivity-aware &ldquo;energy assist&rdquo; network, sharpening fault diagnosis of complex machinery systems.</p>
+            </li>
+          </ol>
+
+          <p class="rd-sub">Thermal power plant</p>
+          <ol class="paper-list">
+            <li class="paper">
+              <h3><a href="https://doi.org/10.1016/j.eswa.2022.119377">Opt-TCAE: boiler-tube leakage detection</a></h3>
+              <p class="paper-meta"><span class="ra-tag pub">ESWA &rsquo;23</span><span class="paper-role">First author</span></p>
+              <p class="paper-desc">An unsupervised temporal convolutional auto-encoder that flags boiler-tube leaks from multi-sensor signals; the latent size is tuned by entropy minimization and the alarm threshold is set automatically via kernel density estimation.</p>
             </li>
           </ol>
         </article>
@@ -100,12 +119,14 @@
         <article class="rd-area" id="dinn">
           <div class="rd-head"><span class="ra-num">02</span><h2>Domain Knowledge Informed Neural Networks</h2></div>
           <p class="rd-blurb">
-            End-to-end deep learning often ignores the physics and signal
-            structure engineers already know &mdash; which hurts generalization,
-            interpretability, and physical consistency. DINN folds that knowledge
-            back in: physics-based loss terms, signal-aware inputs (e.g. 2D
-            time&ndash;frequency maps), and training across simulated conditions.
+            End-to-end deep learning on engineering data often ignores what
+            engineers already know. DINN folds that domain knowledge &mdash;
+            physics, signal analysis, expert rules &mdash; back into the model.
           </p>
+          <ul class="rd-points">
+            <li><b>Problems it fixes</b> &mdash; low generalization (sensitive to noise/conditions), black-box opacity, and physically inconsistent outputs.</li>
+            <li><b>How</b> &mdash; training across simulated multi-condition data (generalization), physics-based loss terms / PINNs (physical consistency), and signal-aware inputs such as 2D time&ndash;frequency maps (interpretability).</li>
+          </ul>
           <ol class="paper-list">
             <li class="paper">
               <h3>A review of PHM methods based on domain-knowledge-informed neural networks</h3>
@@ -119,15 +140,20 @@
         <article class="rd-area" id="design">
           <div class="rd-head"><span class="ra-num">03</span><h2>AI-driven Design</h2></div>
           <p class="rd-blurb">
-            Using AI to generate designs, predict performance faster than
-            simulation, and search high-dimensional design spaces via inverse
-            modeling and reinforcement learning.
+            Using AI across the design loop &mdash; generating candidate designs,
+            predicting performance faster than simulation, and optimizing
+            parameters and topology in high-dimensional spaces.
           </p>
+          <ul class="rd-points">
+            <li><b>Design generation</b> &mdash; generative models for new design candidates.</li>
+            <li><b>Design evaluation</b> &mdash; prediction models, physics-informed networks (PINNs), and explainable AI.</li>
+            <li><b>Design optimization</b> &mdash; parameter &amp; topology optimization via reinforcement learning and inverse modeling.</li>
+          </ul>
           <ol class="paper-list">
             <li class="paper">
-              <h3>Rapid, precise die design to compensate springback in metal bipolar-plate stamping</h3>
+              <h3>Inverse modeling of springback in metal bipolar-plate stamping</h3>
               <p class="paper-meta"><span class="ra-tag">under review</span><span class="paper-role">First author</span><span class="paper-role">w/ Fraunhofer IPT</span></p>
-              <p class="paper-desc">A neural inverse model that predicts the stamping/die parameters needed to hit a target metal bipolar-plate geometry for PEM fuel cells &mdash; compensating springback in seconds instead of through iterative simulation. A collaboration with Fraunhofer IPT (Aachen).</p>
+              <p class="paper-desc">A neural inverse model that predicts the die/stamping parameters needed to hit a target metal bipolar-plate geometry for PEM fuel cells &mdash; compensating springback in seconds instead of through iterative simulation. A collaboration with Fraunhofer IPT (Aachen), built on adaptive sampling + a surrogate model + an inverse model.</p>
             </li>
             <li class="paper">
               <h3>Reinforcement-learning-based optimal parameter estimation of an ultra-precision machine</h3>
@@ -141,20 +167,24 @@
         <article class="rd-area" id="llm">
           <div class="rd-head"><span class="ra-num">04</span><h2>LLM Applications in Engineering</h2></div>
           <p class="rd-blurb">
-            Current work at Samsung Research: domain-specialized LLMs, knowledge
-            graphs, and retrieval-augmented generation (RAG) that bring
+            My current focus at Samsung Research: domain-specialized LLMs,
+            knowledge graphs, and retrieval-augmented generation (RAG) that bring
             engineering data and physical reasoning into one workflow.
           </p>
+          <ul class="rd-points">
+            <li><b>Where LLMs help</b> &mdash; design generation, end-to-end process automation, and integrating human/physics feedback.</li>
+            <li><b>Building a domain LLM</b> &mdash; (1) curate engineering datasets for fine-tuning &amp; RAG, (2) handle multi-modal data (CAD, simulation, sensor signals), (3) deploy in workflows that stay aligned with physical principles.</li>
+          </ul>
           <ol class="paper-list">
             <li class="paper">
               <h3>LLM-based engineering design framework</h3>
               <p class="paper-meta"><span class="ra-tag">in development</span></p>
-              <p class="paper-desc">An LLM workflow that generates candidate designs and folds in feedback, aiming to fit user requirements while respecting physical constraints &mdash; bridging fragmented simulation and optimization tools.</p>
+              <p class="paper-desc">An LLM workflow that generates designs and folds in feedback to fit user requirements while respecting physical constraints &mdash; bridging today&rsquo;s fragmented, rigid, and slow design-tool chains.</p>
             </li>
             <li class="paper">
               <h3>Knowledge-graph + RAG + LLM for PHM</h3>
               <p class="paper-meta"><span class="ra-tag">research</span></p>
-              <p class="paper-desc">Represents fault-related knowledge as a graph and keeps a PHM assistant accurate and up to date by combining retrieval-augmented generation with LLMs &mdash; addressing the black-box and stale-knowledge problems of plain models.</p>
+              <p class="paper-desc">Represents fault-related knowledge as a graph and keeps a PHM assistant accurate and current by combining RAG with LLMs &mdash; tackling the black-box reasoning, slow retrieval, and limited access to unstructured maintenance data that plain models struggle with.</p>
             </li>
           </ol>
         </article>

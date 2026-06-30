@@ -779,6 +779,45 @@ h3 {
   padding-top: 8px;
 }
 
+/* Skills */
+.skill-groups {
+  display: grid;
+  gap: 20px;
+}
+
+.skill-group {
+  align-items: start;
+  display: grid;
+  gap: 10px 24px;
+  grid-template-columns: 140px minmax(0, 1fr);
+}
+
+.skill-cat {
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  padding-top: 8px;
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chips span {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--accent-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 8px 13px;
+}
+
 /* Research showcase */
 .research-lead {
   color: var(--muted);
@@ -988,6 +1027,46 @@ h3 {
   color: var(--muted);
   line-height: 1.65;
   margin: 0;
+}
+
+.rd-points {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+
+.rd-points li {
+  color: var(--muted);
+  line-height: 1.6;
+  padding-left: 18px;
+  position: relative;
+}
+
+.rd-points li::before {
+  background: var(--accent);
+  border-radius: 2px;
+  content: "";
+  height: 7px;
+  left: 0;
+  position: absolute;
+  top: 9px;
+  transform: rotate(45deg);
+  width: 7px;
+}
+
+.rd-points b {
+  color: var(--ink);
+}
+
+.rd-sub {
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin: 20px 0 12px;
+  text-transform: uppercase;
 }
 
 /* Compact career & education layout with logo chips */
@@ -1336,6 +1415,15 @@ h3 {
   .cv-cols {
     gap: 22px;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skill-group {
+    gap: 8px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .skill-cat {
+    padding-top: 0;
   }
 
   .project-item {
