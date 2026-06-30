@@ -76,6 +76,7 @@
   #goBest{font-size:13px;color:var(--amber);letter-spacing:.2em}
   #goItems{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;max-width:420px}
   .dead-title{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(40px,9vw,84px);color:var(--magenta);text-shadow:0 0 30px rgba(255,46,147,.6);letter-spacing:.04em}
+  .dead-sub{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.22em;color:#ff7ab0;text-transform:uppercase;margin-top:-10px}
   .hint{font-size:12px;color:#5e6e90;letter-spacing:.16em;max-width:500px;line-height:1.7}
   .btn2{padding:11px 22px;font-size:14px;letter-spacing:.12em;color:var(--cyan);background:rgba(34,231,255,.1);
     border:1px solid rgba(34,231,255,.4);box-shadow:none}
@@ -163,6 +164,7 @@
 
 <div id="overScreen" class="screen hidden">
   <div class="dead-title">HULL BREACH</div>
+  <div class="dead-sub">선체 관통 — 격추되었다</div>
   <div class="panel" style="text-align:center">
     <div id="goLabel">Final Score</div>
     <div id="goScore">0</div>
@@ -779,7 +781,7 @@ document.getElementById('resumeBtn').onclick=resume;
 const codexScreen=document.getElementById('codexScreen');
 function showOnly(el){ for(const s of [ui.start,ui.over,ui.pauseS,codexScreen,winScreen]) s.classList.add('hidden'); if(el) el.classList.remove('hidden'); }
 function renderCodex(){ document.getElementById('codexList').innerHTML=ITEMS.map(it=>'<div class="codex-row"><div class="ci">'+it.icon+'</div><div><div class="cn">'+it.name+'</div><div class="cd">'+it.desc+'</div></div></div>').join(''); }
-document.getElementById('codexBtn').onclick=()=>{ renderCodex(); showOnly(codexScreen); };
+document.getElementById('codexBtn').onclick=()=>{ location.href='wiki.html'; };
 document.getElementById('codexBackBtn').onclick=()=>{ showOnly(ui.start); };
 
 function damagePlayer(){
