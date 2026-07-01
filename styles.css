@@ -1244,6 +1244,7 @@ h3 {
 
 /* Neon Void side-project card */
 .neon-card {
+  align-items: center;
   position: relative;
   overflow: hidden;
   border-radius: 14px;
@@ -1253,12 +1254,29 @@ h3 {
     radial-gradient(circle at 88% 84%, rgba(255, 46, 147, 0.2), transparent 46%),
     linear-gradient(135deg, #0b0922, #05030f 70%);
   box-shadow: 0 24px 70px rgba(5, 3, 15, 0.35);
+  display: grid;
+  gap: clamp(20px, 4vw, 48px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
   padding: clamp(28px, 5vw, 54px);
 }
 
 .neon-card-body {
   position: relative;
   z-index: 1;
+}
+
+.neon-scene {
+  position: relative;
+  z-index: 1;
+}
+
+.neon-scene svg {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-width: 460px;
+  width: 100%;
+  filter: drop-shadow(0 0 18px rgba(34, 231, 255, 0.18));
 }
 
 .neon-eyebrow {
@@ -1420,6 +1438,14 @@ h3 {
   .skill-group {
     gap: 8px;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .neon-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .neon-scene svg {
+    max-width: 360px;
   }
 
   .skill-cat {
