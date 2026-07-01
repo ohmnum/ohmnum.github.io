@@ -191,6 +191,31 @@ h3 {
   margin-top: -8px;
 }
 
+.alias {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 9px;
+  margin: -8px 0 20px;
+}
+
+.alias img {
+  background: #fff8d8;
+  border: 1px solid #f0d260;
+  border-radius: 8px;
+  height: 30px;
+  padding: 3px;
+  width: 30px;
+}
+
+.alias a {
+  color: var(--accent-strong);
+  font-weight: 800;
+  border-bottom: 1px solid rgba(15, 118, 110, 0.35);
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
