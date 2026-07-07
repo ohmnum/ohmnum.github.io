@@ -356,6 +356,17 @@ const G={ box:(w,h,d)=>new THREE.BoxGeometry(w,h,d), sph:(r,s)=>new THREE.Sphere
   tor:(r,t,a)=>new THREE.TorusGeometry(r,t,8,18,a||Math.PI*2), ico:(r,d)=>new THREE.IcosahedronGeometry(r,d||0), oct:(r,d)=>new THREE.OctahedronGeometry(r,d||0) };
 function smat(c,e){ return new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:e==null?0.7:e,metalness:.4,roughness:.45,flatShading:true}); }
 function bmat(c,o){ return new THREE.MeshBasicMaterial({color:c,transparent:o!=null&&o<1,opacity:o==null?1:o}); }
+const EYE_WHITE=new THREE.MeshBasicMaterial({color:0xeef3ff});
+const EYE_DARK =new THREE.MeshBasicMaterial({color:0x0a0a12});
+// a menacing eyeball that faces the camera (+z): white sclera, glowing iris, dark slit pupil, catch-light
+function mkEye(r,iris){
+  const e=new THREE.Group();
+  e.add(new THREE.Mesh(G.sph(r,16),EYE_WHITE));                                    // white sclera
+  const ir=new THREE.Mesh(G.sph(r*0.92,16),bmat(iris)); ir.position.z=r*0.34; ir.scale.set(1,1,0.55); e.add(ir); // big glowing iris
+  const pu=new THREE.Mesh(G.sph(r*0.62,14),EYE_DARK);  pu.position.z=r*0.66; pu.scale.set(0.34,1,0.55); e.add(pu); // dark vertical slit pupil
+  const gl=new THREE.Mesh(G.sph(r*0.16,10),EYE_WHITE); gl.position.set(r*0.24,r*0.34,r*0.92); e.add(gl);          // catch-light
+  return e;
+}
 
 // ---------------- enemy types (10) ----------------
 const EDEF={
@@ -371,17 +382,14 @@ const EDEF={
  phantom: {hp:4, r:0.9, spd:1.3, score:52,beh:'dash',  wpn:'homing',gap:2.1,col:0xc06bff},
 };
 function buildEnemyMesh(type,col){
-  const g=new THREE.Group(); const m=()=>smat(col,.7); const eye=c=>new THREE.Mesh(G.sph(0.18),bmat(c||0xffffff));
-  const meye=(x,y,z,r,pc)=>{ const e=new THREE.Group();
-    e.add(new THREE.Mesh(G.sph(r),bmat(0xffffff)));
-    const p=new THREE.Mesh(G.sph(r*0.55),bmat(pc||0xff2b2b)); p.position.z=-r*0.7; e.add(p);
-    e.position.set(x,y,z); return e; };
+  const g=new THREE.Group(); const m=()=>smat(col,.7);
+  const eye=(c,r)=>mkEye(r||0.2,c||0x66eaff);
   switch(type){
-   case 'seeker':{ const b=new THREE.Mesh(G.cone(0.5,1.5,6),m()); b.rotation.x=Math.PI/2; g.add(b); const e=eye(); e.position.z=-0.55; g.add(e); break; }
-   case 'gunner':{ g.add(new THREE.Mesh(G.ico(0.8,0),m())); g.add(new THREE.Mesh(G.box(2,0.14,0.5),m())); const e=eye(0xffcc33); e.position.z=-0.7; g.add(e); break; }
+   case 'seeker':{ const b=new THREE.Mesh(G.cone(0.5,1.5,6),m()); b.rotation.x=Math.PI/2; g.add(b); const e=eye(0x66eaff,0.19); e.position.set(0,0.05,0.5); g.add(e); break; }
+   case 'gunner':{ g.add(new THREE.Mesh(G.ico(0.8,0),m())); g.add(new THREE.Mesh(G.box(2,0.14,0.5),m())); const e=eye(0xffcc33,0.24); e.position.set(0,0.04,0.62); g.add(e); break; }
    case 'striker':{ const b=new THREE.Mesh(G.cone(0.45,1.7,4),m()); b.rotation.x=Math.PI/2; g.add(b); const w=new THREE.Mesh(G.box(1.7,0.1,0.4),m()); w.rotation.z=Math.PI/7; g.add(w); break; }
    case 'missiler':{ g.add(new THREE.Mesh(G.box(1.1,0.5,1.3),m())); for(let s=-1;s<=1;s+=2){ const p=new THREE.Mesh(G.cyl(0.18,0.18,0.9,8),m()); p.rotation.x=Math.PI/2; p.position.set(s*0.65,0,0.1); g.add(p);} break; }
-   case 'charger':{ g.add(new THREE.Mesh(G.ico(1.1,0),m())); const e=eye(0xffee88); e.scale.setScalar(1.7); e.position.z=-0.65; g.add(e); break; }
+   case 'charger':{ g.add(new THREE.Mesh(G.ico(1.1,0),m())); const e=eye(0xffee66,0.34); e.position.set(0,0,0.72); g.add(e); break; }
    case 'brute':{ g.add(new THREE.Mesh(G.ico(1.7,0),smat(col,.35))); for(let k=0;k<4;k++){ const a=k/4*6.28; const s=new THREE.Mesh(G.cone(0.4,0.7,5),m()); s.position.set(Math.cos(a)*1.3,Math.sin(a)*1.3,0); s.lookAt(s.position.clone().multiplyScalar(2)); g.add(s);} break; }
    case 'weaver':{ g.add(new THREE.Mesh(G.oct(0.8,0),m())); g.add(new THREE.Mesh(G.box(2.2,0.08,0.3),m())); break; }
    case 'splitter':{ g.add(new THREE.Mesh(G.ico(1.1,0),m())); g.add(new THREE.Mesh(G.sph(0.5,10),bmat(col))); break; }
@@ -389,11 +397,14 @@ function buildEnemyMesh(type,col){
    case 'phantom':{ const b=new THREE.Mesh(G.cone(0.55,1.6,3),m()); b.rotation.x=Math.PI/2; g.add(b); const h=new THREE.Mesh(G.tor(0.7,0.06,Math.PI*2),bmat(col,.6)); g.add(h); break; }
    default: g.add(new THREE.Mesh(G.ico(0.9,0),m()));
   }
-  // give the eyeless mobs a menacing pair of monster eyes
+  // give the eyeless mobs a menacing pair of camera-facing monster eyes
   if(!['seeker','gunner','charger'].includes(type)){
-    const r=type==='brute'?0.32:type==='turret'?0.24:0.2, sx=r*1.7;
-    g.add(meye(-sx,0.12,-0.5,r,0xff2b2b));
-    g.add(meye( sx,0.12,-0.5,r,0xff2b2b));
+    const r=type==='brute'?0.34:type==='turret'?0.26:0.22, sx=r*1.85;
+    const EZ={striker:0.72,missiler:0.78,brute:1.2,weaver:0.6,splitter:0.9,turret:0.6,phantom:0.55};
+    const fz=EZ[type]||0.6, fy=type==='turret'?0.34:0.14;
+    const eL=mkEye(r,0xff3a3a), eR=mkEye(r,0xff3a3a);
+    eL.position.set(-sx,fy,fz); eR.position.set(sx,fy,fz);
+    g.add(eL); g.add(eR);
   }
   return g;
 }
