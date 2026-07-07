@@ -988,14 +988,16 @@ function update(dt){
       const near=en.position.z>-26?1.7:1.0;
       en.position.z+=eff*1.7*near*f;
       en.position.x+=(ship.position.x-en.position.x)*0.07*f;
-      en.position.y+=(ship.position.y-en.position.y)*0.055*f;
-      en.rotation.z+=0.05*f; }
+      en.position.y+=(ship.position.y-en.position.y)*0.055*f; }
     else if(d.beh==='weave'){ d.weave+=(0.035+d.spdJit*0.02)*f; en.position.x=d.baseX+Math.sin(d.weave)*d.weaveAmp; en.position.z+=eff*f; }
     else if(d.beh==='strafe'){ d.weave+=(0.05+d.spdJit*0.03)*f; en.position.x=d.baseX+Math.sin(d.weave)*(d.weaveAmp+0.8); en.position.y+=Math.cos(d.weave*0.7)*0.02*f; en.position.z+=eff*0.85*f; }
     else if(d.beh==='slow'){ en.position.z+=eff*0.6*f; }
     else if(d.beh==='dash'){ d.dashCD-=dt; if(d.dash>0){ d.dash-=dt; en.position.z+=eff*3.0*f; } else { en.position.z+=eff*0.5*f; if(d.dashCD<=0){ d.dash=0.3; d.dashCD=1.4+Math.random(); } } en.position.x+=(ship.position.x-en.position.x)*0.01*f; }
     else { en.position.z+=eff*f; }
-    en.rotation.x+=d.spin.x*f; en.rotation.y+=d.spin.y*f; en.rotation.z+=d.spin.z*f;
+    // face the player so the eyes actually stare down the cockpit, with a gentle rock for life
+    d.rollA=(d.rollA||0)+d.spin.z*6*f;
+    en.lookAt(ship.position.x,ship.position.y,ship.position.z);
+    en.rotateZ(Math.sin(d.rollA)*0.22);
     // weapons
     if(d.wpn){ const onscreen=en.position.z<2 && en.position.z>-64, mz=en.position.clone(); mz.z+=1.0;
       if(d.wpn==='charge'){
