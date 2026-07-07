@@ -227,7 +227,7 @@ const LB_CONFIG = {
   TABLE: "neon_void_scores",
   TOP_N: 10,
 };
-const APP_VERSION = "v1.0.3";
+const APP_VERSION = "v1.0.4";
 
 const app=document.getElementById('app');
 const stage=document.getElementById('stage');
@@ -280,9 +280,9 @@ const PLAY={x:9.5,y:5.4};
 const aimTarget=new THREE.Vector3(), aimDir=new THREE.Vector3(0,0,-1);
 const bullets=[], enemies=[], particles=[], enemyBullets=[], drops=[], drones=[];
 let boss=null;
-const bulletGeo=new THREE.CylinderGeometry(0.09,0.09,1.1,6); bulletGeo.rotateX(Math.PI/2);
-const bulletMat=new THREE.MeshBasicMaterial({color:0x9bffff});
-const bulletMatP=new THREE.MeshBasicMaterial({color:0xffd96b});
+const bulletGeo=new THREE.CylinderGeometry(0.05,0.11,1.7,8); bulletGeo.rotateX(Math.PI/2);
+const bulletMat=new THREE.MeshBasicMaterial({color:0x8ffcff,transparent:true,opacity:0.96,blending:THREE.AdditiveBlending});
+const bulletMatP=new THREE.MeshBasicMaterial({color:0xffe27a,transparent:true,opacity:0.96,blending:THREE.AdditiveBlending});
 
 // ---------------- ITEMS (20) ----------------
 const ITEMS=[
@@ -372,6 +372,10 @@ const EDEF={
 };
 function buildEnemyMesh(type,col){
   const g=new THREE.Group(); const m=()=>smat(col,.7); const eye=c=>new THREE.Mesh(G.sph(0.18),bmat(c||0xffffff));
+  const meye=(x,y,z,r,pc)=>{ const e=new THREE.Group();
+    e.add(new THREE.Mesh(G.sph(r),bmat(0xffffff)));
+    const p=new THREE.Mesh(G.sph(r*0.55),bmat(pc||0xff2b2b)); p.position.z=-r*0.7; e.add(p);
+    e.position.set(x,y,z); return e; };
   switch(type){
    case 'seeker':{ const b=new THREE.Mesh(G.cone(0.5,1.5,6),m()); b.rotation.x=Math.PI/2; g.add(b); const e=eye(); e.position.z=-0.55; g.add(e); break; }
    case 'gunner':{ g.add(new THREE.Mesh(G.ico(0.8,0),m())); g.add(new THREE.Mesh(G.box(2,0.14,0.5),m())); const e=eye(0xffcc33); e.position.z=-0.7; g.add(e); break; }
@@ -384,6 +388,12 @@ function buildEnemyMesh(type,col){
    case 'turret':{ g.add(new THREE.Mesh(G.cyl(1.1,1.3,0.7,8),m())); const dome=new THREE.Mesh(G.sph(0.7,10),m()); dome.position.y=0.3; g.add(dome); for(let s=-1;s<=1;s+=2){ const bar=new THREE.Mesh(G.cyl(0.1,0.1,1,6),m()); bar.rotation.x=Math.PI/2; bar.position.set(s*0.35,0.1,-0.5); g.add(bar);} break; }
    case 'phantom':{ const b=new THREE.Mesh(G.cone(0.55,1.6,3),m()); b.rotation.x=Math.PI/2; g.add(b); const h=new THREE.Mesh(G.tor(0.7,0.06,Math.PI*2),bmat(col,.6)); g.add(h); break; }
    default: g.add(new THREE.Mesh(G.ico(0.9,0),m()));
+  }
+  // give the eyeless mobs a menacing pair of monster eyes
+  if(!['seeker','gunner','charger'].includes(type)){
+    const r=type==='brute'?0.32:type==='turret'?0.24:0.2, sx=r*1.7;
+    g.add(meye(-sx,0.12,-0.5,r,0xff2b2b));
+    g.add(meye( sx,0.12,-0.5,r,0xff2b2b));
   }
   return g;
 }
@@ -841,7 +851,9 @@ function flashDamage(c){ const v=ui.vignette; v.style.boxShadow='inset 0 0 150px
   requestAnimationFrame(()=>{ v.style.transition='opacity .55s'; v.style.opacity='0'; }); }
 function killEnemy(en,i,byFrag){
   const d=en.userData; const col=EDEF[d.type]?EDEF[d.type].col:0xffae5a;
-  burst(en.position.clone(),col,d.r>1.4?28:18); sfxBoom();
+  burst(en.position.clone(),col,d.r>1.4?46:32);
+  burst(en.position.clone(),0xffffff,8);
+  sfxBoom();
   if(d.tele){ scene.remove(d.tele); d.tele=null; }
   if(d.split){ for(let k=0;k<2;k++){ makeEnemy('seeker',true); const e=enemies[enemies.length-1]; if(e) e.position.copy(en.position).add(new THREE.Vector3((k?1:-1)*0.9,0,0)); } }
   if(!byFrag){ for(let k=0;k<stats.fragment;k++){ spawnFragment(en.position,1); spawnFragment(en.position,-1); } }
