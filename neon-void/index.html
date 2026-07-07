@@ -920,10 +920,9 @@ function update(dt){
   if(stats.shieldRegen>0 && !hasShield){ shieldChargeT+=dt; if(shieldChargeT>=stats.shieldRegen){ hasShield=true; shieldChargeT=0; } }
   shieldBubble.visible=hasShield;
 
-  // shoot
+  // shoot — auto-fire on both desktop and mobile (hold still and it keeps firing)
   shootCooldown-=dt;
-  const wantFire = isTouch ? true : firing;
-  if(wantFire&&shootCooldown<=0){ fire(); shootCooldown=stats.cooldown; }
+  if(shootCooldown<=0){ fire(); shootCooldown=stats.cooldown; }
 
   // drones
   for(const dr of drones){ dr.angle+=0.03*f; const rad=2.4;

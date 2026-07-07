@@ -843,6 +843,46 @@ h3 {
   padding: 8px 13px;
 }
 
+.cert-badge {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: inline-flex;
+  gap: 12px;
+  padding: 10px 16px 10px 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.cert-badge:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.cert-badge img {
+  height: 34px;
+  width: 34px;
+  flex: 0 0 auto;
+}
+
+.cert-badge-txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.cert-badge-txt strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.cert-badge-txt > span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 /* Research showcase */
 .research-lead {
   color: var(--muted);
