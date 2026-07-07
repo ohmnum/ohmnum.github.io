@@ -1202,6 +1202,10 @@ h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.cv-cert {
+  margin-top: 32px;
+}
+
 .cv-h {
   color: var(--accent-strong);
   font-size: 0.78rem;
