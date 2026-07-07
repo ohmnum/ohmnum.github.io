@@ -361,10 +361,12 @@ const EYE_DARK =new THREE.MeshBasicMaterial({color:0x0a0a12});
 // a menacing eyeball that faces the camera (+z): white sclera, glowing iris, dark slit pupil, catch-light
 function mkEye(r,iris){
   const e=new THREE.Group();
-  e.add(new THREE.Mesh(G.sph(r,16),EYE_WHITE));                                    // white sclera
-  const ir=new THREE.Mesh(G.sph(r*0.92,16),bmat(iris)); ir.position.z=r*0.34; ir.scale.set(1,1,0.55); e.add(ir); // big glowing iris
-  const pu=new THREE.Mesh(G.sph(r*0.62,14),EYE_DARK);  pu.position.z=r*0.66; pu.scale.set(0.34,1,0.55); e.add(pu); // dark vertical slit pupil
-  const gl=new THREE.Mesh(G.sph(r*0.16,10),EYE_WHITE); gl.position.set(r*0.24,r*0.34,r*0.92); e.add(gl);          // catch-light
+  e.add(new THREE.Mesh(G.sph(r,20),EYE_WHITE));                                    // white sclera
+  // iris + pupil are stacked domes that clearly PROTRUDE past the sclera (avoids z-fighting stripes)
+  const ir=new THREE.Mesh(G.sph(r*0.9,20),bmat(iris)); ir.position.z=r*0.5;  ir.scale.set(1,1,0.62); e.add(ir); // colored iris ring
+  const pu=new THREE.Mesh(G.sph(r*0.56,20),EYE_DARK);  pu.position.z=r*0.78; pu.scale.set(1,1,0.62); e.add(pu); // big ROUND pupil = cute
+  const gl=new THREE.Mesh(G.sph(r*0.17,16),EYE_WHITE); gl.position.set(-r*0.14,r*0.2,r*1.16); e.add(gl);        // glossy catch-light
+  const g2=new THREE.Mesh(G.sph(r*0.08,12),EYE_WHITE); g2.position.set(r*0.15,-r*0.08,r*1.16); e.add(g2);       // little sparkle
   return e;
 }
 
@@ -475,6 +477,12 @@ function buildBossMesh(idx,col){
   else if(idx===3){ g.add(new THREE.Mesh(G.box(5,1.4,1.4),armor)); for(let s=-1;s<=1;s+=2){ const c=new THREE.Mesh(G.cyl(0.8,0.8,1.4,8),armor); c.rotation.z=Math.PI/2; c.position.set(s*2.8,0,0); g.add(c);} }
   else if(idx===4){ g.add(new THREE.Mesh(G.ico(3.0,1),armor)); const r=new THREE.Mesh(G.tor(3.4,0.18,Math.PI*2),bmat(col,.8)); r.rotation.x=Math.PI/2; g.add(r); }
   else { g.add(new THREE.Mesh(G.ico(2.6,1),armor)); for(let k=0;k<3;k++){ const r=new THREE.Mesh(G.tor(3.0+k*0.4,0.1,Math.PI*2),bmat(col,.6)); r.rotation.x=Math.PI/2+k*0.5; r.rotation.y=k; g.add(r);} }
+  // give each boss a big pair of cute eyes on the front
+  const EZB={1:2.2,2:2.3,3:1.1,4:2.9,5:2.7}, ez=EZB[idx]||2.3;
+  const er=idx>=4?0.85:0.75, esx=idx===3?1.5:1.15, ey=0.35;
+  const bL=mkEye(er,0x59e0ff), bR=mkEye(er,0x59e0ff);
+  bL.position.set(-esx,ey,ez); bR.position.set(esx,ey,ez);
+  g.add(bL); g.add(bR);
   return g;
 }
 function spawnBoss(){
