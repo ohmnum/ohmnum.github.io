@@ -108,6 +108,23 @@ a {
   color: var(--ink);
 }
 
+.nav a.nav-ship {
+  display: inline-flex;
+  align-items: center;
+  margin: -4px 0;
+}
+.nav a.nav-ship svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: drop-shadow(0 0 0 rgba(34, 231, 255, 0));
+}
+.nav a.nav-ship:hover svg {
+  transform: translateY(-1px) scale(1.12);
+  filter: drop-shadow(0 0 6px rgba(34, 231, 255, 0.55));
+}
+
 .section {
   margin: 0 auto;
   max-width: 1180px;
