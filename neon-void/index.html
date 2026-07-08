@@ -1134,7 +1134,7 @@ function introAdvance(){ if(state!==S.intro) return; ensureIntroAudio();
   if(introPanel>=INTRO.length-1){ endIntro(); return; }
   if(actx) sfxLaser(); introSetPanel(introPanel+1); }
 function endIntro(){ if(state!==S.intro) return; state=S.menu;
-  IN.scr.classList.add('hidden');
+  IN.scr.classList.add('hidden'); introGroup.visible=false; ship.visible=false;   // clean starfield behind the title
   if(actx){ sfxBoom(); sfxPower(); }
   const v=ui.vignette; v.style.boxShadow='inset 0 0 240px 90px rgba(255,255,255,.6)'; v.style.transition='none'; v.style.opacity='1';
   requestAnimationFrame(()=>{ v.style.transition='opacity .85s'; v.style.opacity='0'; });
@@ -1146,6 +1146,11 @@ function endIntro(){ if(state!==S.intro) return; state=S.menu;
     setTimeout(()=>{ tt.style.transition='opacity .5s'; tt.style.opacity='0';
       setTimeout(()=>{ tt.classList.add('hidden'); tt.style.transition=''; done(); },500); },2000);
   } else done(); }
+function skipIntro(){ if(state!==S.intro) return; state=S.menu;   // SKIP: jump straight to the menu, no title reveal
+  IN.scr.classList.add('hidden'); const tt=document.getElementById('introTitle'); if(tt) tt.classList.add('hidden');
+  const v=ui.vignette; v.style.transition='none'; v.style.opacity='0';
+  introGroup.visible=false; ship.visible=true; ship.position.set(0,0,4.2); ship.rotation.set(0,0,0);
+  camera.position.set(0,2.4,11); camera.lookAt(0,0.5,-8); showOnly(ui.start); }
 function introUpdate(dt){ introClk+=dt; introPT+=dt; const f=dt*60;
   if(!introTyped){ introChars+=dt*26; if(introChars>=introMax){ introChars=introMax; introTyped=true; IN.next.style.opacity='1'; }
     IN.text.innerHTML=typeHtml(INTRO[introPanel].html,Math.floor(introChars)); }
@@ -1187,7 +1192,7 @@ function introUpdate(dt){ introClk+=dt; introPT+=dt; const f=dt*60;
 }
 IN.catcher.addEventListener('click',()=>introAdvance());
 IN.catcher.addEventListener('touchstart',e=>{ e.preventDefault(); introAdvance(); },{passive:false});
-IN.skip.addEventListener('click',e=>{ e.stopPropagation(); ensureIntroAudio(); endIntro(); });
+IN.skip.addEventListener('click',e=>{ e.stopPropagation(); skipIntro(); });
 
 const clock=new THREE.Clock();
 function loop(){
