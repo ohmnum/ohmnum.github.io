@@ -285,24 +285,27 @@
 
 <script>
 /* ---------- SVG silhouettes (match in-game mesh shapes) ---------- */
+// cute eye that matches the in-game look: white sclera + colored iris + round pupil + catch-light
+const EYE=(cx,cy,r,ir)=>`<g><circle cx="${cx}" cy="${cy}" r="${r}" fill="#eef3ff"/><circle cx="${cx}" cy="${cy}" r="${r*0.72}" fill="${ir}"/><circle cx="${cx}" cy="${cy}" r="${r*0.42}" fill="#0a0a12"/><circle cx="${cx-r*0.22}" cy="${cy-r*0.24}" r="${r*0.17}" fill="#fff"/></g>`;
+const RED='#ff3a3a';
 const SVG={
- seeker:'<svg viewBox="0 0 64 64"><polygon points="32,58 21,16 32,27 43,16" fill="currentColor"/><circle cx="32" cy="22" r="3.5" fill="#fff"/></svg>',
- gunner:'<svg viewBox="0 0 64 64"><rect x="6" y="29" width="52" height="6" rx="2" fill="currentColor"/><polygon points="32,14 48,32 32,50 16,32" fill="currentColor"/><circle cx="32" cy="40" r="3" fill="#ffcc33"/></svg>',
- striker:'<svg viewBox="0 0 64 64"><g transform="rotate(18 32 32)"><polygon points="32,58 26,12 32,22 38,12" fill="currentColor"/><rect x="14" y="30" width="36" height="4" rx="2" fill="currentColor"/></g></svg>',
- missiler:'<svg viewBox="0 0 64 64"><rect x="22" y="18" width="20" height="28" rx="3" fill="currentColor"/><rect x="11" y="22" width="8" height="22" rx="3" fill="currentColor"/><rect x="45" y="22" width="8" height="22" rx="3" fill="currentColor"/></svg>',
- charger:'<svg viewBox="0 0 64 64"><polygon points="32,8 54,20 54,44 32,56 10,44 10,20" fill="currentColor" opacity=".85"/><circle cx="32" cy="32" r="8" fill="#ffee88"/></svg>',
- brute:'<svg viewBox="0 0 64 64"><polygon points="32,6 44,12 56,26 50,40 40,56 24,54 10,42 8,24 18,12" fill="currentColor"/><polygon points="32,18 42,26 38,40 26,40 22,26" fill="#06070f" opacity=".4"/></svg>',
- weaver:'<svg viewBox="0 0 64 64"><rect x="4" y="30" width="56" height="4" rx="2" fill="currentColor"/><polygon points="32,16 48,32 32,48 16,32" fill="currentColor"/></svg>',
- splitter:'<svg viewBox="0 0 64 64"><path d="M30 12 A20 20 0 0 0 30 52 Z" fill="currentColor"/><path d="M34 12 A20 20 0 0 1 34 52 Z" fill="currentColor"/><rect x="31" y="10" width="2" height="44" fill="#06070f"/></svg>',
- turret:'<svg viewBox="0 0 64 64"><rect x="12" y="40" width="40" height="12" rx="3" fill="currentColor"/><path d="M18 40 A14 14 0 0 1 46 40 Z" fill="currentColor"/><rect x="26" y="14" width="4" height="22" fill="currentColor"/><rect x="34" y="14" width="4" height="22" fill="currentColor"/></svg>',
- phantom:'<svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity=".6"/><polygon points="32,54 20,18 32,28 44,18" fill="currentColor"/></svg>'
+ seeker:`<svg viewBox="0 0 64 64"><polygon points="32,58 21,16 32,27 43,16" fill="currentColor"/>${EYE(32,24,5,'#66eaff')}</svg>`,
+ gunner:`<svg viewBox="0 0 64 64"><rect x="6" y="29" width="52" height="6" rx="2" fill="currentColor"/><polygon points="32,14 48,32 32,50 16,32" fill="currentColor"/>${EYE(32,37,5,'#ffcc33')}</svg>`,
+ striker:`<svg viewBox="0 0 64 64"><g transform="rotate(18 32 32)"><polygon points="32,58 26,12 32,22 38,12" fill="currentColor"/><rect x="14" y="30" width="36" height="4" rx="2" fill="currentColor"/>${EYE(28,28,3.4,RED)}${EYE(36,28,3.4,RED)}</g></svg>`,
+ missiler:`<svg viewBox="0 0 64 64"><rect x="22" y="18" width="20" height="28" rx="3" fill="currentColor"/><rect x="11" y="22" width="8" height="22" rx="3" fill="currentColor"/><rect x="45" y="22" width="8" height="22" rx="3" fill="currentColor"/>${EYE(28,30,4,RED)}${EYE(37,30,4,RED)}</svg>`,
+ charger:`<svg viewBox="0 0 64 64"><polygon points="32,8 54,20 54,44 32,56 10,44 10,20" fill="currentColor" opacity=".85"/>${EYE(32,32,7,'#ffee66')}</svg>`,
+ brute:`<svg viewBox="0 0 64 64"><polygon points="32,6 44,12 56,26 50,40 40,56 24,54 10,42 8,24 18,12" fill="currentColor"/>${EYE(26,30,4.6,RED)}${EYE(39,30,4.6,RED)}</svg>`,
+ weaver:`<svg viewBox="0 0 64 64"><rect x="4" y="30" width="56" height="4" rx="2" fill="currentColor"/><polygon points="32,16 48,32 32,48 16,32" fill="currentColor"/>${EYE(27,32,3.4,RED)}${EYE(37,32,3.4,RED)}</svg>`,
+ splitter:`<svg viewBox="0 0 64 64"><path d="M30 12 A20 20 0 0 0 30 52 Z" fill="currentColor"/><path d="M34 12 A20 20 0 0 1 34 52 Z" fill="currentColor"/><rect x="31" y="10" width="2" height="44" fill="#06070f"/>${EYE(23,32,3.2,RED)}${EYE(41,32,3.2,RED)}</svg>`,
+ turret:`<svg viewBox="0 0 64 64"><rect x="12" y="40" width="40" height="12" rx="3" fill="currentColor"/><path d="M18 40 A14 14 0 0 1 46 40 Z" fill="currentColor"/><rect x="26" y="14" width="4" height="22" fill="currentColor"/><rect x="34" y="14" width="4" height="22" fill="currentColor"/>${EYE(27,31,3.4,RED)}${EYE(37,31,3.4,RED)}</svg>`,
+ phantom:`<svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity=".6"/><polygon points="32,54 20,18 32,28 44,18" fill="currentColor"/>${EYE(27,32,3.2,RED)}${EYE(37,32,3.2,RED)}</svg>`
 };
 const BSVG={
- dread:'<svg viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="30" ry="18" fill="currentColor" opacity=".85"/><polygon points="10,40 0,30 0,50" fill="currentColor"/><polygon points="70,40 80,30 80,50" fill="currentColor"/><polygon points="40,28 22,40 40,52 58,40" fill="#ffee66"/></svg>',
- hydra:'<svg viewBox="0 0 80 80"><circle cx="40" cy="46" r="16" fill="currentColor"/><g fill="currentColor"><polygon points="40,46 14,16 22,18"/><polygon points="40,46 28,10 36,14"/><polygon points="40,46 52,10 44,14"/><polygon points="40,46 66,16 58,18"/><polygon points="40,46 40,8 46,16"/></g></svg>',
- sentinel:'<svg viewBox="0 0 80 80"><rect x="10" y="34" width="60" height="12" rx="3" fill="currentColor"/><circle cx="14" cy="40" r="11" fill="currentColor"/><circle cx="66" cy="40" r="11" fill="currentColor"/><rect x="36" y="36" width="8" height="8" fill="#6effff"/></svg>',
- swarm:'<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="16" fill="currentColor"/><ellipse cx="40" cy="40" rx="32" ry="11" fill="none" stroke="currentColor" stroke-width="3" opacity=".7"/></svg>',
- overmind:'<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="14" fill="currentColor"/><ellipse cx="40" cy="40" rx="30" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".75"/><ellipse cx="40" cy="40" rx="22" ry="26" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".55" transform="rotate(35 40 40)"/></svg>'
+ dread:`<svg viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="30" ry="18" fill="currentColor" opacity=".85"/><polygon points="10,40 0,30 0,50" fill="currentColor"/><polygon points="70,40 80,30 80,50" fill="currentColor"/>${EYE(33,40,5,'#59e0ff')}${EYE(47,40,5,'#59e0ff')}</svg>`,
+ hydra:`<svg viewBox="0 0 80 80"><g fill="currentColor"><polygon points="40,46 14,16 22,18"/><polygon points="40,46 28,10 36,14"/><polygon points="40,46 52,10 44,14"/><polygon points="40,46 66,16 58,18"/><polygon points="40,46 40,8 46,16"/></g><circle cx="40" cy="46" r="16" fill="currentColor"/>${EYE(34,45,4.4,'#59e0ff')}${EYE(46,45,4.4,'#59e0ff')}</svg>`,
+ sentinel:`<svg viewBox="0 0 80 80"><rect x="10" y="34" width="60" height="12" rx="3" fill="currentColor"/><circle cx="14" cy="40" r="11" fill="currentColor"/><circle cx="66" cy="40" r="11" fill="currentColor"/>${EYE(33,40,4.4,'#59e0ff')}${EYE(47,40,4.4,'#59e0ff')}</svg>`,
+ swarm:`<svg viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="32" ry="11" fill="none" stroke="currentColor" stroke-width="3" opacity=".7"/><circle cx="40" cy="40" r="16" fill="currentColor"/>${EYE(34,40,4.4,'#59e0ff')}${EYE(46,40,4.4,'#59e0ff')}</svg>`,
+ overmind:`<svg viewBox="0 0 80 80"><ellipse cx="40" cy="40" rx="30" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".75"/><ellipse cx="40" cy="40" rx="22" ry="26" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".55" transform="rotate(35 40 40)"/><circle cx="40" cy="40" r="14" fill="currentColor"/>${EYE(34,40,4.4,'#59e0ff')}${EYE(46,40,4.4,'#59e0ff')}</svg>`
 };
 const hex=n=>'#'+n.toString(16).padStart(6,'0');
 
@@ -332,33 +335,33 @@ const SHOTS=[
 
 const BOSSES=[
  {id:'dread', stage:5, name:'DREADNOUGHT', col:0xff2e93, hp:70,
-  pat:['좌우로 위빙하며 접근','일반 + 빠른레이저를 부채꼴로 확산 사격'],
-  tip:'확산탄 사이 빈틈으로 파고들어 정면에서 화력 집중.'},
+  pat:['조준 5방향 일제사격','일반레이저 + 좌우 확산탄','전방 탄환 링 살포','차지빔 저격'],
+  tip:'4패턴을 순환한다. 링이 뜨면 틈으로, 차지 조준선이 뜨면 측면으로.'},
  {id:'hydra', stage:10, name:'HYDRA', col:0x9b6bff, hp:115,
-  pat:['천천히 좌우 이동','유도탄 5발을 부채꼴로 일제사격'],
-  tip:'유도탄 볼리는 크게 원을 그리며 흘린다. 멈추면 둘러싸인다.'},
+  pat:['유도탄 5발 부채꼴 볼리','빠른레이저 3연사','좌우 측면에서 유도탄 협공','차지빔'],
+  tip:'유도탄은 진행 방향과 수직으로 꺾어 흘린다. 멈추면 협공에 갇힌다.'},
  {id:'sentinel', stage:15, name:'SENTINEL', col:0x6effff, hp:150,
-  pat:['세 지점을 오가며 자리잡음','빠른레이저 견제 후 차지빔 저격'],
+  pat:['정밀 조준 점사','빠른레이저 광역 견제','시그니처 차지빔','전방 탄환 링'],
   tip:'차지빔 조준선이 뜨면 즉시 측면으로. 빔 직후가 반격 타이밍.'},
  {id:'swarm', stage:20, name:'SWARMLORD', col:0x49e0c0, hp:195,
-  pat:['방사형으로 탄막을 360° 살포','주기적으로 시커 졸개 소환'],
-  tip:'탄막 링의 틈으로 빠져나가며 졸개부터 정리해 시야 확보.'},
+  pat:['플레이어를 향해 전진하는 탄환 링','조준 고속탄 확산','졸개 소환 + 저격','차지빔'],
+  tip:'링은 이제 정면으로 밀려온다 — 틈으로 파고들며 졸개부터 정리하라.'},
  {id:'overmind', stage:25, name:'OVERMIND', col:0xffaa22, hp:290,
-  pat:['확산 고속탄','유도탄 볼리','차지빔','졸개 소환 — 4페이즈 순환'],
-  tip:'최종 보스. 페이즈 전환마다 위협이 바뀐다. 한 사이클씩 끊어 대응하라.'}
+  pat:['대형 조준 부채꼴','유도탄 볼리','차지빔','전방 링 + 졸개 소환'],
+  tip:'최종 보스. 4페이즈를 순환한다. 페이즈가 바뀌는 순간 위협이 바뀌니 한 사이클씩 끊어 대응하라.'}
 ];
 
 const ITEMS=[
  {id:'twin',name:'트윈 캐논',icon:'➕',ef:'발사 수 +1'},
  {id:'oc',name:'오버클럭',icon:'⚡',ef:'연사 속도 증가'},
  {id:'heavy',name:'헤비 라운드',icon:'💥',ef:'데미지 +0.5'},
- {id:'rail',name:'레일건 코일',icon:'🚀',ef:'탄속 +15%'},
+ {id:'rail',name:'레일건 코일',icon:'🚀',ef:'탄속 +22%'},
  {id:'pierce',name:'관통탄',icon:'📍',ef:'관통 +1'},
- {id:'homing',name:'호밍 칩',icon:'🧭',ef:'유도 성능 증가'},
+ {id:'homing',name:'호밍 칩',icon:'🧭',ef:'유도 성능 대폭 증가'},
  {id:'frag',name:'프래그멘터',icon:'✴️',ef:'처치 시 파편탄'},
- {id:'big',name:'빅샷',icon:'⭕',ef:'탄 크기 증가'},
- {id:'plasma',name:'플라즈마 엣지',icon:'🔆',ef:'데미지 +18%'},
- {id:'crit',name:'크리티컬 렌즈',icon:'🎯',ef:'치명타 +8%'},
+ {id:'big',name:'빅샷',icon:'⭕',ef:'탄 크기 +25%'},
+ {id:'plasma',name:'플라즈마 엣지',icon:'🔆',ef:'데미지 +30%'},
+ {id:'crit',name:'크리티컬 렌즈',icon:'🎯',ef:'치명타 +12%'},
  {id:'hull',name:'강화 선체',icon:'❤️',ef:'최대 선체 +1'},
  {id:'vamp',name:'흡혈 코어',icon:'🩸',ef:'처치 시 회복 확률 ↑'},
  {id:'eshield',name:'에너지 실드',icon:'🛡️',ef:'한 대 막는 재충전 실드'},
@@ -366,9 +369,9 @@ const ITEMS=[
  {id:'time',name:'시간 왜곡',icon:'⏳',ef:'적 탄 속도 둔화'},
  {id:'clover',name:'행운의 클로버',icon:'🍀',ef:'아이템 드랍률 ↑'},
  {id:'magnet',name:'마그넷',icon:'🧲',ef:'획득 범위 ↑'},
- {id:'adr',name:'아드레날린',icon:'👟',ef:'이동 속도 +10%'},
+ {id:'adr',name:'아드레날린',icon:'👟',ef:'이동 속도 +15%'},
  {id:'turret',name:'오토 터렛',icon:'🛰️',ef:'자동 터렛 +1'},
- {id:'score',name:'스코어 앰프',icon:'💰',ef:'점수 +15%'}
+ {id:'score',name:'스코어 앰프',icon:'💰',ef:'점수 +25%'}
 ];
 const ITEM_GROUPS=[
  {name:'화력 / FIREPOWER',col:'#ff7a3c',ids:['heavy','plasma','crit','big']},
