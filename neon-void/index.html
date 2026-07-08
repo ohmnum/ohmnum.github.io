@@ -363,7 +363,8 @@ const ITEMS=[
  {id:'eshield',name:'에너지 실드', icon:'🛡️',  color:0x9b7bff, desc:'재충전 실드',        mod:s=>{s.shieldRegen=s.shieldRegen===0?28:s.shieldRegen*0.85;}},
  {id:'time',  name:'시간 왜곡',    icon:'⏳',  color:0x7ad6ff, desc:'적 탄 둔화',         mod:s=>{s.ebSlow*=0.92;}},
  {id:'frag',  name:'프래그멘터',   icon:'✴️',  color:0xffb14a, desc:'처치 시 파편탄',     mod:s=>{s.fragment+=1;}},
- {id:'cryo',  name:'크라이오 탄',  icon:'❄️',  color:0x7fefff, desc:'명중 시 적 둔화',    mod:s=>{s.cryo+=1;}},
+ {id:'cryo',  name:'크라이오 탄',  icon:'❄️',  color:0x7fefff, desc:'명중 시 적 둔화(좌우·돌진 포함)', mod:s=>{s.cryo+=1;}},
+ {id:'missile',name:'미사일 보급',  icon:'🚀',  color:0xff2e93, desc:'스킬 미사일 +2 충전',  mod:s=>{}},
 ];
 const ITEMS_BY_ID={}; for(const it of ITEMS) ITEMS_BY_ID[it.id]=it;
 const ITEM_ORDER=ITEMS.map(i=>i.id);
@@ -474,9 +475,12 @@ function poolForStage(s){
   if(s>=21) return ['turret','charger','brute','missiler','phantom','splitter','striker','gunner'];
   if(s>=16) return ['missiler','turret','charger','brute','phantom','splitter','striker'];
   if(s>=11) return ['striker','missiler','splitter','turret','brute','charger','phantom'];
-  if(s>=6)  return ['gunner','striker','weaver','splitter','brute','missiler'];
-  if(s>=3)  return ['seeker','gunner','weaver','brute','striker'];
-  return ['seeker','gunner','weaver'];
+  if(s>=8)  return ['seeker','gunner','weaver','brute','striker','splitter','missiler']; // 8-9
+  if(s>=6)  return ['seeker','gunner','weaver','brute','striker','splitter'];            // 6-7
+  if(s>=4)  return ['seeker','gunner','weaver','brute','striker'];                       // 4
+  if(s>=3)  return ['seeker','gunner','weaver','brute'];                                 // 3
+  if(s>=2)  return ['seeker','gunner','weaver'];                                         // 2
+  return ['seeker','gunner'];                                                            // 1
 }
 function makeEnemy(type,forced){
   if(bossActive && !forced) return;
@@ -562,53 +566,53 @@ function bossUpdate(dt){
   const aimC=()=>ship.position.clone().sub(mz()).normalize();
   if(d.core) d.core.rotation.y+=0.03*f; if(d.flash>0) d.flash-=dt; boss.rotation.z+=0.003*f;
   if(d.enter){ boss.position.z+=0.55*f; if(boss.position.z>=-44){ boss.position.z=-44; d.enter=false; } return; }
-  d.weave+=0.012*f;
-  // resolve an active charge for any boss
+  // resolve an active charge — boss holds still, telegraph grows, then a focused beam fires DOWN the warned line
   if(d.charge>0){ d.charge-=dt; if(d.tele) d.tele.scale.x=d.tele.scale.z=0.2+(1.0-d.charge);
-    if(d.charge<=0){ for(let q=-2;q<=2;q++) eShot(mz(),d.beamDir.clone().applyAxisAngle(YAXIS,q*0.08),'beam'); if(d.tele){scene.remove(d.tele);d.tele=null;} d.fireTimer=1.2; } return; }
-  // ---- shared attack helpers (all aimed at / biased toward the player) ----
+    if(d.charge<=0){ for(let q=-1;q<=1;q++) eShot(mz(),d.beamDir.clone().applyAxisAngle(YAXIS,q*0.05),'beam'); if(d.tele){scene.remove(d.tele);d.tele=null;} d.fireTimer=1.0; } return; }
+  d.weave+=0.012*f;   // advance movement only when NOT charging (otherwise position snaps after a charge)
+  // ---- shared attack helpers — all AIMED at the player so they actually connect ----
+  const XA=new THREE.Vector3(1,0,0);
   const startBeam=(dir)=>{ d.beamDir=(dir||aimC()); d.charge=1.0; d.tele=makeTele(mz(),d.beamDir,d.col); };
-  const fan=(n,spread,kind)=>{ const a=aimC(),P=mz(); for(let q=0;q<n;q++){ const off=(q-(n-1)/2)*spread; eShot(P,a.clone().applyAxisAngle(YAXIS,off),kind); } };
-  // a spread "ring" that actually travels toward the player (+z) so it can hit — leaves dodgeable gaps
-  const ring=(n,kind)=>{ const P=mz(); for(let k=0;k<n;k++){ const a=k/n*6.283+d.weave*0.5;
-    eShot(P,new THREE.Vector3(Math.cos(a)*1.0,Math.sin(a)*1.0,0.9).normalize(),kind); } };
+  const fan =(n,spread,kind)=>{ const a=aimC(),P=mz(); for(let q=0;q<n;q++){ const o=(q-(n-1)/2)*spread; eShot(P,a.clone().applyAxisAngle(YAXIS,o),kind); } }; // horizontal (좌우)
+  const vfan=(n,spread,kind)=>{ const a=aimC(),P=mz(); for(let q=0;q<n;q++){ const o=(q-(n-1)/2)*spread; eShot(P,a.clone().applyAxisAngle(XA,o),kind); } };    // vertical   (세로)
+  const cross=(n,spread,kind)=>{ fan(n,spread,kind); vfan(n,spread,kind); };                                                                                  // + shaped
 
   if(d.pat==='dread'){ boss.position.x=Math.sin(d.weave)*7; boss.position.y=2+Math.sin(d.weave*1.7)*1.4;
     d.fireTimer-=dt; if(d.fireTimer<=0){ d.phase=(d.phase+1)%4;
-      if(d.phase===0){ fan(5,0.15,'fast'); d.fireTimer=0.9; }                     // 1) aimed 5-way volley
+      if(d.phase===0){ fan(5,0.15,'fast'); d.fireTimer=0.9; }                     // 1) horizontal 5-way volley
       else if(d.phase===1){ const a=aimC(); eShot(mz(),a,'laser');                // 2) heavy laser + wings
         for(let q=1;q<=2;q++){ eShot(mz(),a.clone().applyAxisAngle(YAXIS,0.16*q),'fast'); eShot(mz(),a.clone().applyAxisAngle(YAXIS,-0.16*q),'fast'); } d.fireTimer=1.0; }
-      else if(d.phase===2){ ring(12,'laser'); d.fireTimer=1.4; }                  // 3) forward ring
+      else if(d.phase===2){ vfan(5,0.15,'fast'); d.fireTimer=1.0; }               // 3) VERTICAL volley (세로)
       else { startBeam(); } } }                                                   // 4) charge beam
 
   else if(d.pat==='hydra'){ boss.position.x=Math.sin(d.weave*0.8)*6; boss.position.y=2.2;
     d.fireTimer-=dt; if(d.fireTimer<=0){ d.phase=(d.phase+1)%4;
       if(d.phase===0){ fan(5,0.12,'homing'); d.fireTimer=1.5; }                   // 1) homing volley
-      else if(d.phase===1){ fan(3,0.16,'fast'); d.fireTimer=0.8; }                // 2) fast triple
+      else if(d.phase===1){ vfan(4,0.16,'fast'); d.fireTimer=0.9; }               // 2) vertical fast rain
       else if(d.phase===2){ const a=aimC();                                       // 3) twin homing waves from the flanks
         for(const sx of [-3.2,3.2]){ const P=mz(); P.x+=sx; for(let q=-1;q<=1;q++) eShot(P,a.clone().applyAxisAngle(YAXIS,q*0.14),'homing'); } d.fireTimer=1.6; }
       else { startBeam(); } } }                                                   // 4) charge beam
 
   else if(d.pat==='sentinel'){ boss.position.x+=((Math.round(Math.sin(d.weave*0.5))*5)-boss.position.x)*0.05*f; boss.position.y=2.3;
     d.fireTimer-=dt; if(d.fireTimer<=0){ d.phase=(d.phase+1)%4;
-      if(d.phase===0){ fan(3,0.05,'fast'); d.fireTimer=0.6; }                      // 1) tight aimed burst
-      else if(d.phase===1){ fan(5,0.13,'fast'); d.fireTimer=1.0; }                 // 2) wide suppressing spread
+      if(d.phase===0){ fan(3,0.05,'fast'); d.fireTimer=0.55; }                     // 1) tight aimed burst
+      else if(d.phase===1){ cross(5,0.14,'fast'); d.fireTimer=1.1; }               // 2) + shaped spread (좌우+세로)
       else if(d.phase===2){ startBeam(); }                                         // 3) signature charge beam
-      else { ring(10,'fast'); d.fireTimer=1.3; } } }                               // 4) forward ring
+      else { vfan(5,0.14,'fast'); d.fireTimer=1.1; } } }                           // 4) vertical wall
 
   else if(d.pat==='swarm'){ boss.position.x=Math.sin(d.weave*0.6)*5; boss.position.y=2.4;
     d.fireTimer-=dt; if(d.fireTimer<=0){ d.phase=(d.phase+1)%4;
-      if(d.phase===0){ ring(16,'laser'); d.fireTimer=1.4; }                        // 1) forward bullet-ring (now actually reaches you)
-      else if(d.phase===1){ fan(5,0.14,'fast'); d.fireTimer=0.9; }                 // 2) aimed fast spread
+      if(d.phase===0){ fan(7,0.13,'fast'); d.fireTimer=1.0; }                      // 1) wide horizontal sweep
+      else if(d.phase===1){ vfan(6,0.14,'fast'); d.fireTimer=1.0; }                // 2) vertical rain
       else if(d.phase===2){ spawnMinion('seeker'); spawnMinion('phantom'); eShot(mz(),aimC(),'laser'); d.fireTimer=1.2; } // 3) summon + snipe
       else { startBeam(); } } }                                                    // 4) charge beam
 
   else { boss.position.x=Math.sin(d.weave*0.7)*5; boss.position.y=2.2+Math.sin(d.weave)*1.0;   // OVERMIND — final, cycles all
     d.fireTimer-=dt; if(d.fireTimer<=0){ d.phase=(d.phase+1)%4;
-      if(d.phase===0){ fan(7,0.12,'fast'); d.fireTimer=0.8; }                      // 1) big aimed fan
-      else if(d.phase===1){ fan(5,0.14,'homing'); d.fireTimer=1.1; }              // 2) homing volley
+      if(d.phase===0){ fan(7,0.12,'fast'); d.fireTimer=0.8; }                      // 1) big horizontal fan
+      else if(d.phase===1){ vfan(5,0.14,'homing'); d.fireTimer=1.1; }             // 2) vertical homing
       else if(d.phase===2){ startBeam(); }                                         // 3) charge beam
-      else { ring(14,'fast'); spawnMinion('phantom'); spawnMinion('seeker'); d.fireTimer=1.4; } } } // 4) ring + summon
+      else { cross(6,0.13,'fast'); spawnMinion('phantom'); spawnMinion('seeker'); d.fireTimer=1.4; } } } // 4) + spread + summon
 }
 
 // ---------------- drops / items ----------------
@@ -636,6 +640,7 @@ function buildItemModel(it){
    case 'time': A(G.cone(0.35,0.52,12),0,0.28); A(G.cone(0.35,0.52,12),0,-0.28,0,Math.PI); break;
    case 'frag': { A(G.sph(0.22)); for(let k=0;k<5;k++){ const a=k/5*6.28; A(G.sph(0.12),Math.cos(a)*0.46,Math.sin(a)*0.46); } break; }
    case 'cryo': for(let k=0;k<3;k++) A(G.box(0.9,0.08,0.08),0,0,0,0,0,k*Math.PI/3); A(G.sph(0.14)); break;
+   case 'missile': A(G.cyl(0.16,0.16,0.62,10),0,0.05,0); A(G.cone(0.16,0.32,10),0,0.5,0); for(let k=0;k<3;k++){ const a=k/3*6.28; A(G.box(0.1,0.24,0.02),Math.cos(a)*0.16,-0.24,Math.sin(a)*0.16,0,a); } break;
    default: A(G.oct(0.45));
   }
   return g;
@@ -653,6 +658,7 @@ function grantItem(id){
   owned.push(id); itemCounts[id]=(itemCounts[id]||0)+1;
   recompute();
   if(id==='hull') lives=Math.min(maxLives,lives+1);
+  if(id==='missile'){ missiles+=2; updateSkillUI(); }
   renderLives(); syncDrones(); renderItemBar();
   const it=ITEMS_BY_ID[id]; toast('획득: '+it.name, it.color); sfxPower();
 }
@@ -1184,9 +1190,13 @@ function introUpdate(dt){ introClk+=dt; introPT+=dt; const f=dt*60;
     if(!showW) continue; const ns=w.m.scale.x+(0.55-w.m.scale.x)*0.09*f; w.m.scale.setScalar(ns);   // small debris
     w.m.rotation.x+=w.spin.x*f; w.m.rotation.y+=w.spin.y*f; w.m.rotation.z+=w.spin.z*f; w.m.position.y+=w.drift*dt;
     const em=w.m.userData.embers; if(em) for(let k=0;k<em.length;k++) em[k].material.opacity=0.35+Math.abs(Math.sin(introClk*5+w.m.position.x+k*1.7))*0.6; }
-  // ohmnum: bob during ONE CHICK (index 3), launch during INTO THE VOID (index 4)
-  if(introPanel===3){ ship.position.set(Math.sin(introClk)*0.3,-0.2+Math.cos(introClk*1.3)*0.2,2.0); ship.rotation.set(0,Math.sin(introClk*0.6)*0.2,Math.sin(introClk)*0.1); }
-  else if(introPanel===4){ ship.position.z-=dt*6; ship.position.y+=(0.6-ship.position.y)*0.05*f; ship.rotation.set(-0.2,0,0); }
+  // ohmnum: idle with engine OFF during THE LAST PILOT (index 3), then ignite + thrust at launch (index 4)
+  const eng=ship.userData.engine;
+  if(introPanel===3){ ship.position.set(Math.sin(introClk)*0.3,-0.2+Math.cos(introClk*1.3)*0.2,2.0); ship.rotation.set(0,Math.sin(introClk*0.6)*0.2,Math.sin(introClk)*0.1);
+    eng.scale.set(0.25,0.25,0.2); }                                                    // engine cold — not thrusting
+  else if(introPanel===4){ const ign=Math.min(1,introPT/0.5);                          // ignition ramp
+    eng.scale.set(0.5+ign*0.6,0.5+ign*0.6, 0.3+ign*(3.4+Math.sin(introClk*32)*0.4));   // flare up + flicker
+    ship.rotation.set(-0.2,0,0); ship.position.y+=(0.6-ship.position.y)*0.05*f; ship.position.z-=dt*7*ign; }  // thrust forward once lit
   if(introChick){ const want=(introPanel===3)?1:0; introChick.material.opacity+=(want-introChick.material.opacity)*0.06*f;
     if(introPanel===3) introChick.position.set(2.1,0.5+Math.cos(introClk*1.3)*0.14,2.9); }
 }
@@ -1204,7 +1214,7 @@ function loop(){
   starGeo.attributes.position.needsUpdate=true;
   if(state===S.playing) update(dt);
   else if(state===S.intro) introUpdate(dt);
-  const eng=ship.userData.engine; eng.scale.z=1.6+Math.sin(performance.now()*0.02)*0.4;
+  if(state!==S.intro){ const eng=ship.userData.engine; eng.scale.z=1.6+Math.sin(performance.now()*0.02)*0.4; }
   if(shieldBubble.visible) shieldBubble.rotation.y+=0.03;
   if(state!==S.intro){
     if(shake>0){ shake-=dt*2.4; camera.position.x=(Math.random()-.5)*shake*1.2; camera.position.y=2.4+(Math.random()-.5)*shake*1.2; }
@@ -1282,16 +1292,17 @@ function update(dt){
 
   // enemies
   for(let i=enemies.length-1;i>=0;i--){ const en=enemies[i],d=en.userData;
-    const eff=enemySpeed*d.spdMul*d.spdJit*(d.slowT>0?stats.cryoMul:1); if(d.slowT>0) d.slowT-=dt;
+    const sl=(d.slowT>0?stats.cryoMul:1);   // cryo also slows the lateral / charging motion, not just forward speed
+    const eff=enemySpeed*d.spdMul*d.spdJit*sl; if(d.slowT>0) d.slowT-=dt;
     if(d.beh==='rush'){ // kamikaze: curve hard toward the ship and lunge when close
       const near=en.position.z>-26?1.7:1.0;
       en.position.z+=eff*1.7*near*f;
-      en.position.x+=(ship.position.x-en.position.x)*0.07*f;
-      en.position.y+=(ship.position.y-en.position.y)*0.055*f; }
-    else if(d.beh==='weave'){ d.weave+=(0.035+d.spdJit*0.02)*f; en.position.x=d.baseX+Math.sin(d.weave)*d.weaveAmp; en.position.z+=eff*f; }
-    else if(d.beh==='strafe'){ d.weave+=(0.05+d.spdJit*0.03)*f; en.position.x=d.baseX+Math.sin(d.weave)*(d.weaveAmp+0.8); en.position.y+=Math.cos(d.weave*0.7)*0.02*f; en.position.z+=eff*0.85*f; }
+      en.position.x+=(ship.position.x-en.position.x)*0.07*sl*f;
+      en.position.y+=(ship.position.y-en.position.y)*0.055*sl*f; }
+    else if(d.beh==='weave'){ d.weave+=(0.035+d.spdJit*0.02)*sl*f; en.position.x=d.baseX+Math.sin(d.weave)*d.weaveAmp; en.position.z+=eff*f; }
+    else if(d.beh==='strafe'){ d.weave+=(0.05+d.spdJit*0.03)*sl*f; en.position.x=d.baseX+Math.sin(d.weave)*(d.weaveAmp+0.8); en.position.y+=Math.cos(d.weave*0.7)*0.02*sl*f; en.position.z+=eff*0.85*f; }
     else if(d.beh==='slow'){ en.position.z+=eff*0.6*f; }
-    else if(d.beh==='dash'){ d.dashCD-=dt; if(d.dash>0){ d.dash-=dt; en.position.z+=eff*3.0*f; } else { en.position.z+=eff*0.5*f; if(d.dashCD<=0){ d.dash=0.3; d.dashCD=1.4+Math.random(); } } en.position.x+=(ship.position.x-en.position.x)*0.01*f; }
+    else if(d.beh==='dash'){ d.dashCD-=dt; if(d.dash>0){ d.dash-=dt; en.position.z+=eff*3.0*f; } else { en.position.z+=eff*0.5*f; if(d.dashCD<=0){ d.dash=0.3; d.dashCD=1.4+Math.random(); } } en.position.x+=(ship.position.x-en.position.x)*0.01*sl*f; }
     else { en.position.z+=eff*f; }
     // face the player so the eyes actually stare down the cockpit, with a gentle rock for life
     d.rollA=(d.rollA||0)+d.spin.z*6*f;

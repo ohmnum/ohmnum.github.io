@@ -335,20 +335,20 @@ const SHOTS=[
 
 const BOSSES=[
  {id:'dread', stage:5, name:'DREADNOUGHT', col:0xff2e93, hp:70,
-  pat:['조준 5방향 일제사격','일반레이저 + 좌우 확산탄','전방 탄환 링 살포','차지빔 저격'],
-  tip:'4패턴을 순환한다. 링이 뜨면 틈으로, 차지 조준선이 뜨면 측면으로.'},
+  pat:['가로 5방향 일제사격','일반레이저 + 좌우 확산탄','세로 낙하 탄막','차지빔 저격'],
+  tip:'가로·세로 탄막이 번갈아 온다. 세로 탄막엔 좌우로, 차지 조준선엔 측면으로 피하라.'},
  {id:'hydra', stage:10, name:'HYDRA', col:0x9b6bff, hp:115,
-  pat:['유도탄 5발 부채꼴 볼리','빠른레이저 3연사','좌우 측면에서 유도탄 협공','차지빔'],
-  tip:'유도탄은 진행 방향과 수직으로 꺾어 흘린다. 멈추면 협공에 갇힌다.'},
+  pat:['유도탄 부채꼴 볼리','세로 고속탄 비','좌우 측면 유도탄 협공','차지빔'],
+  tip:'유도탄은 진행 방향과 수직으로 꺾어 흘린다. 세로 탄막은 좌우 이동으로 통과.'},
  {id:'sentinel', stage:15, name:'SENTINEL', col:0x6effff, hp:150,
-  pat:['정밀 조준 점사','빠른레이저 광역 견제','시그니처 차지빔','전방 탄환 링'],
-  tip:'차지빔 조준선이 뜨면 즉시 측면으로. 빔 직후가 반격 타이밍.'},
+  pat:['정밀 조준 점사','십자(+) 확산 탄막','시그니처 차지빔','세로 탄막 벽'],
+  tip:'십자 탄막은 대각선 빈틈으로. 차지빔 조준선이 뜨면 즉시 측면으로.'},
  {id:'swarm', stage:20, name:'SWARMLORD', col:0x49e0c0, hp:195,
-  pat:['플레이어를 향해 전진하는 탄환 링','조준 고속탄 확산','졸개 소환 + 저격','차지빔'],
-  tip:'링은 이제 정면으로 밀려온다 — 틈으로 파고들며 졸개부터 정리하라.'},
+  pat:['광역 가로 스윕','세로 탄막 비','졸개 소환 + 저격','차지빔'],
+  tip:'가로·세로 탄막을 번갈아 대응하며 졸개부터 정리해 시야를 확보하라.'},
  {id:'overmind', stage:25, name:'OVERMIND', col:0xffaa22, hp:290,
-  pat:['대형 조준 부채꼴','유도탄 볼리','차지빔','전방 링 + 졸개 소환'],
-  tip:'최종 보스. 4페이즈를 순환한다. 페이즈가 바뀌는 순간 위협이 바뀌니 한 사이클씩 끊어 대응하라.'}
+  pat:['대형 가로 부채꼴','세로 유도탄','차지빔','십자 확산 + 졸개 소환'],
+  tip:'최종 보스. 가로·세로·유도·차지·소환을 모두 순환한다. 한 사이클씩 끊어 대응하라.'}
 ];
 
 const ITEMS=[
@@ -365,8 +365,9 @@ const ITEMS=[
  {id:'hull',name:'강화 선체',icon:'❤️',ef:'최대 선체 +1'},
  {id:'vamp',name:'흡혈 코어',icon:'🩸',ef:'처치 시 회복 확률 ↑'},
  {id:'eshield',name:'에너지 실드',icon:'🛡️',ef:'한 대 막는 재충전 실드'},
- {id:'cryo',name:'크라이오 탄',icon:'❄️',ef:'명중 시 적 둔화'},
+ {id:'cryo',name:'크라이오 탄',icon:'❄️',ef:'명중 시 적 둔화 (좌우·돌진 이동도 느려짐)'},
  {id:'time',name:'시간 왜곡',icon:'⏳',ef:'적 탄 속도 둔화'},
+ {id:'missile',name:'미사일 보급',icon:'🚀',ef:'스킬 미사일 +2 충전'},
  {id:'clover',name:'행운의 클로버',icon:'🍀',ef:'아이템 드랍률 ↑'},
  {id:'magnet',name:'마그넷',icon:'🧲',ef:'획득 범위 ↑'},
  {id:'adr',name:'아드레날린',icon:'👟',ef:'이동 속도 +15%'},
@@ -375,7 +376,7 @@ const ITEMS=[
 ];
 const ITEM_GROUPS=[
  {name:'화력 / FIREPOWER',col:'#ff7a3c',ids:['heavy','plasma','crit','big']},
- {name:'탄환 / MUNITIONS',col:'#22e7ff',ids:['twin','oc','rail','pierce','homing','frag']},
+ {name:'탄환 / MUNITIONS',col:'#22e7ff',ids:['twin','oc','rail','pierce','homing','frag','missile']},
  {name:'생존 / SURVIVAL',col:'#ff2e93',ids:['hull','vamp','eshield','cryo','time']},
  {name:'유틸 / UTILITY',col:'#49e07a',ids:['clover','magnet','adr','turret','score']}
 ];
