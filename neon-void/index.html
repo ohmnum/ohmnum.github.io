@@ -38,10 +38,9 @@
   #vignette{position:absolute;inset:0;pointer-events:none;z-index:9;opacity:0;box-shadow:inset 0 0 150px 34px rgba(255,46,147,.9)}
   .stick{position:absolute;bottom:34px;width:118px;height:118px;border-radius:50%;background:rgba(12,10,28,.4);
     border:2px solid rgba(34,231,255,.22);display:none;z-index:14;pointer-events:none}
-  #stickL{left:26px} #stickR{right:26px;border-color:rgba(255,46,147,.25)}
+  #stickL{left:26px}
   .stick .knob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;
     background:radial-gradient(circle at 40% 35%,rgba(34,231,255,.95),rgba(34,231,255,.3));box-shadow:0 0 18px rgba(34,231,255,.6)}
-  #stickR .knob{background:radial-gradient(circle at 40% 35%,rgba(255,46,147,.95),rgba(255,46,147,.3));box-shadow:0 0 18px rgba(255,46,147,.6)}
   .stick .stick-lbl{position:absolute;left:0;right:0;bottom:-21px;text-align:center;font-size:10px;letter-spacing:.3em;color:#7c8bb0}
 
   #bossbar{position:absolute;top:88px;left:50%;transform:translateX(-50%);width:min(540px,82vw);z-index:11;pointer-events:none;opacity:0;transition:opacity .4s}
@@ -161,18 +160,19 @@
     display:flex;align-items:center;justify-content:center;pointer-events:auto;backdrop-filter:blur(4px);transition:.15s}
   #muteBtn:hover{border-color:var(--cyan);box-shadow:0 0 16px rgba(34,231,255,.35)}
   #muteBtn.off{opacity:.55}
-  #skillBtn{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:13;pointer-events:auto;cursor:pointer;
+  #skillBtn{position:absolute;bottom:16px;right:70px;z-index:13;pointer-events:auto;cursor:pointer;
     font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;color:#fff;text-transform:uppercase;
     background:linear-gradient(180deg,rgba(255,46,147,.92),rgba(150,18,90,.92));border:1px solid rgba(255,140,190,.75);
     border-radius:12px;padding:10px 20px;box-shadow:0 0 26px rgba(255,46,147,.55);display:flex;align-items:center;gap:8px;transition:.15s}
   #skillBtn .sk-ico{font-size:17px}
   #skillBtn #skillCount{font-family:'Orbitron',sans-serif;min-width:16px;text-align:center;color:var(--amber)}
-  #skillBtn:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 0 38px rgba(255,46,147,.85)}
-  #skillBtn:active{transform:translateX(-50%)}
+  #skillBtn:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(255,46,147,.85)}
+  #skillBtn:active{transform:none}
   #skillBtn.hidden{display:none}
   #skillBtn.empty{opacity:.4;filter:grayscale(.55);cursor:default;box-shadow:none}
   @media (max-width:560px){ #hud{padding:12px 14px} .stat .val{font-size:22px} #bossbar{top:72px} #itemBar{max-width:70%}
     #muteBtn{bottom:auto;top:64px;right:14px}
+    #skillBtn{bottom:44px;right:24px;padding:12px 18px}
     #goScore,#winScore{font-size:42px} .dead-title{font-size:clamp(34px,8vw,60px)} }
 </style>
 </head>
@@ -215,8 +215,7 @@
     <h3>Controls</h3>
     <div class="ctrls">
       <kbd>WASD / ←→</kbd><span>함선 이동</span>
-      <kbd>MOUSE</kbd><span>조준</span>
-      <kbd>CLICK / HOLD</kbd><span>겨눈 방향으로 연사</span>
+      <kbd>AUTO</kbd><span>전방 자동 연사</span>
       <kbd>SPACE</kbd><span>발사 (키보드)</span>
       <kbd>E / SHIFT</kbd><span>스킬 미사일 — 유도탄 3발 (게임당 2회)</span>
       <kbd>P</kbd><span>일시정지</span>
@@ -224,7 +223,7 @@
   </div>
   <button class="btn" id="startBtn">▶ 출격</button>
   <div class="row"><button class="btn btn2" id="codexBtn">📖 도감</button></div>
-  <div class="hint">적을 처치하면 가끔 <b style="color:var(--cyan)">아이템</b>이 떨어진다(빛기둥으로 표시됨). 주워 먹으면 <b style="color:var(--amber)">영구히 누적</b>되어 점점 강해진다. 적도 레이저를 쏘고, 5웨이브마다 보스가 탄막을 퍼붓는다.<br><span style="color:#7c8bb0">📱 모바일: <b>왼쪽 스틱</b> 이동 · <b>오른쪽 스틱</b> 조준 (자동 발사)</span></div>
+  <div class="hint">적을 처치하면 가끔 <b style="color:var(--cyan)">아이템</b>이 떨어진다(빛기둥으로 표시됨). 주워 먹으면 <b style="color:var(--amber)">영구히 누적</b>되어 점점 강해진다. 적도 레이저를 쏘고, 5웨이브마다 보스가 탄막을 퍼붓는다.<br><span style="color:#7c8bb0">📱 모바일: <b>왼쪽 스틱</b> 이동 (전방 자동 발사) · 오른쪽 하단 <b>미사일</b> 버튼</span></div>
 </div>
 
 <div id="overScreen" class="screen hidden">
@@ -265,7 +264,6 @@
 </div>
 
 <div id="stickL" class="stick"><div class="knob"></div><div class="stick-lbl">이동</div></div>
-<div id="stickR" class="stick"><div class="knob"></div><div class="stick-lbl">조준</div></div>
 </div><!-- /stage -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -335,7 +333,7 @@ const ship=new THREE.Group(); let shieldBubble;
   ship.position.set(0,0,4.2); scene.add(ship); }
 
 const PLAY={x:9.5,y:5.4};
-const aimTarget=new THREE.Vector3(), aimDir=new THREE.Vector3(0,0,-1);
+const aimDir=new THREE.Vector3(0,0,-1);
 const bullets=[], enemies=[], particles=[], enemyBullets=[], drops=[], drones=[], skillMissiles=[];
 let boss=null;
 const bulletGeo=new THREE.CylinderGeometry(0.05,0.11,1.7,8); bulletGeo.rotateX(Math.PI/2);
@@ -855,27 +853,24 @@ window.addEventListener('keydown',e=>{ if(state===S.intro){ e.preventDefault(); 
   if(e.code==='KeyP'&&state===S.playing) pause(); else if(e.code==='KeyP'&&state===S.paused) resume();
   if((e.code==='KeyE'||e.code==='ShiftLeft'||e.code==='ShiftRight')&&state===S.playing){ e.preventDefault(); useMissile(); } });
 window.addEventListener('keyup',e=>{ keys[e.code]=false; if(e.code==='Space') firing=false; });
-const elStickL=document.getElementById('stickL'), elStickR=document.getElementById('stickR');
-const joyL={id:null,cx:0,cy:0,x:0,y:0}, joyR={id:null,cx:0,cy:0,x:0,y:0}; const JOY_R=58;
+const elStickL=document.getElementById('stickL');
+const joyL={id:null,cx:0,cy:0,x:0,y:0}; const JOY_R=58;
 function stickCenter(el){ const r=el.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; }
 function setKnob(j,el,cx,cy){ let dx=cx-j.cx, dy=cy-j.cy; const d=Math.hypot(dx,dy);
   if(d>JOY_R){ const a=Math.atan2(dy,dx); dx=Math.cos(a)*JOY_R; dy=Math.sin(a)*JOY_R; }
   j.x=dx/JOY_R; j.y=dy/JOY_R; el.querySelector('.knob').style.transform='translate('+dx+'px,'+dy+'px)'; }
 function resetJoy(j,el){ j.id=null; j.x=0; j.y=0; if(el) el.querySelector('.knob').style.transform='translate(0,0)'; }
-function resetJoys(){ resetJoy(joyL,elStickL); resetJoy(joyR,elStickR); }
-function setSticks(v){ if(!isTouch) return; const d=v?'block':'none'; elStickL.style.display=d; elStickR.style.display=d; if(!v) resetJoys(); }
+function resetJoys(){ resetJoy(joyL,elStickL); }
+function setSticks(v){ if(!isTouch) return; const d=v?'block':'none'; elStickL.style.display=d; if(!v) resetJoys(); }
 if(isTouch){
   document.body.style.cursor='default';
   renderer.domElement.addEventListener('touchstart',e=>{ e.preventDefault();
-    const sr=stage.getBoundingClientRect(), mid=sr.left+sr.width/2;
     for(const t of e.changedTouches){
-      if(joyL.id===null && t.clientX<mid){ const c=stickCenter(elStickL); joyL.id=t.identifier; joyL.cx=c.x; joyL.cy=c.y; setKnob(joyL,elStickL,t.clientX,t.clientY); }
-      else if(joyR.id===null && t.clientX>=mid){ const c=stickCenter(elStickR); joyR.id=t.identifier; joyR.cx=c.x; joyR.cy=c.y; setKnob(joyR,elStickR,t.clientX,t.clientY); } } },{passive:false});
+      if(joyL.id===null){ const c=stickCenter(elStickL); joyL.id=t.identifier; joyL.cx=c.x; joyL.cy=c.y; setKnob(joyL,elStickL,t.clientX,t.clientY); } } },{passive:false});
   renderer.domElement.addEventListener('touchmove',e=>{ e.preventDefault();
     for(const t of e.changedTouches){
-      if(t.identifier===joyL.id) setKnob(joyL,elStickL,t.clientX,t.clientY);
-      else if(t.identifier===joyR.id) setKnob(joyR,elStickR,t.clientX,t.clientY); } },{passive:false});
-  const endh=e=>{ for(const t of e.changedTouches){ if(t.identifier===joyL.id) resetJoy(joyL,elStickL); else if(t.identifier===joyR.id) resetJoy(joyR,elStickR); } };
+      if(t.identifier===joyL.id) setKnob(joyL,elStickL,t.clientX,t.clientY); } },{passive:false});
+  const endh=e=>{ for(const t of e.changedTouches){ if(t.identifier===joyL.id) resetJoy(joyL,elStickL); } };
   window.addEventListener('touchend',endh); window.addEventListener('touchcancel',endh);
 }
 function computeBounds(){
@@ -1226,20 +1221,18 @@ function loop(){
 function update(dt){
   const f=dt*60;
   const mv=stats.moveMul;
+  // aim is fixed straight ahead — no mouse/stick aiming on any platform
+  aimDir.set(0,0,-1);
   if(isTouch){
-    // ---- mobile: left stick = move, right stick = aim (auto-fire) ----
+    // ---- mobile: left stick = move (auto-fire forward) ----
     const maxS=0.26*mv, accel=0.14;
     const tvx=joyL.id!==null? joyL.x*maxS:0, tvy=joyL.id!==null? -joyL.y*maxS:0;
     shipVel.x+=(tvx-shipVel.x)*accel*f; shipVel.y+=(tvy-shipVel.y)*accel*f;
     ship.position.x+=shipVel.x*f; ship.position.y+=shipVel.y*f;
     ship.position.x=Math.max(-PLAY.x,Math.min(PLAY.x,ship.position.x));
     ship.position.y=Math.max(-PLAY.y,Math.min(PLAY.y,ship.position.y));
-    if(joyR.id!==null && (Math.abs(joyR.x)+Math.abs(joyR.y))>0.2) aimDir.set(joyR.x*1.7,-joyR.y*1.7,-1).normalize();
-    else aimDir.set(0,0,-1);
-    ship.lookAt(ship.position.clone().add(aimDir));
-    ship.rotateZ(-shipVel.x*1.3);
   } else {
-    // ---- desktop: keyboard move (smoothed) + mouse aim ----
+    // ---- desktop: keyboard move (smoothed), auto-fire forward ----
     const maxS=0.24*mv, accel=0.12;
     const kx=(keys['KeyD']||keys['ArrowRight']?1:0)-(keys['KeyA']||keys['ArrowLeft']?1:0);
     const ky=(keys['KeyW']||keys['ArrowUp']?1:0)-(keys['KeyS']||keys['ArrowDown']?1:0);
@@ -1247,11 +1240,9 @@ function update(dt){
     ship.position.x+=shipVel.x*f; ship.position.y+=shipVel.y*f;
     ship.position.x=Math.max(-PLAY.x,Math.min(PLAY.x,ship.position.x));
     ship.position.y=Math.max(-PLAY.y,Math.min(PLAY.y,ship.position.y));
-    aimTarget.set(mouse.x*PLAY.x*1.7, mouse.y*PLAY.y*1.7+0.5, ship.position.z-26);
-    aimDir.copy(aimTarget).sub(ship.position).normalize();
-    ship.lookAt(aimTarget);
-    ship.rotateZ(-shipVel.x*1.3);
   }
+  ship.lookAt(ship.position.clone().add(aimDir));
+  ship.rotateZ(-shipVel.x*1.3);
 
   // invulnerability frames (blink)
   if(invuln>0){ invuln-=dt; ship.visible=(Math.floor(performance.now()/70)%2===0); } else ship.visible=true;
