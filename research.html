@@ -109,19 +109,14 @@
             bring domain data and reasoning into one workflow.
           </p>
           <ul class="rd-points">
-            <li><b>Where LLMs help</b> &mdash; design generation, end-to-end process automation, and integrating human/physics feedback.</li>
-            <li><b>Building a domain LLM</b> &mdash; (1) curate engineering datasets for fine-tuning &amp; RAG, (2) handle multi-modal data (CAD, simulation, sensor signals), (3) deploy in workflows that stay aligned with physical principles.</li>
+            <li><b>Why a graph</b> &mdash; products, faults, and procedures are linked to each other; a graph keeps those links so retrieval can follow them instead of matching loose text.</li>
+            <li><b>What I focus on</b> &mdash; getting the right facts into the model&rsquo;s context before it answers, especially for questions with several conditions at once.</li>
           </ul>
           <ol class="paper-list">
             <li class="paper">
               <h3>OrcheRAG: multi-constraint product search</h3>
               <p class="paper-meta"><span class="ra-tag">project</span></p>
               <p class="paper-desc">A GraphRAG-based product search system for queries with several conditions at once. It filters candidates by each condition at the retrieval stage, before generation, so the answer satisfies every requirement in the query.</p>
-            </li>
-            <li class="paper">
-              <h3>LLM-based engineering design framework</h3>
-              <p class="paper-meta"><span class="ra-tag">in development</span></p>
-              <p class="paper-desc">An LLM workflow that generates designs and folds in feedback to fit user requirements while respecting physical constraints &mdash; bridging today&rsquo;s fragmented, rigid, and slow design-tool chains.</p>
             </li>
             <li class="paper">
               <h3>Knowledge-graph + RAG + LLM for PHM</h3>
