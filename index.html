@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Hyeongmin Kim - Staff Engineer at Samsung Research working on domain-informed AI, PHM, engineering design, knowledge graphs, and LLM/RAG agents."
+      content="Hyeongmin Kim - Staff Engineer at Samsung Research working on LLM behavior correction, domain-informed AI, PHM, engineering design, knowledge graphs, and LLM/RAG agents."
     />
     <title>Hyeongmin Kim</title>
     <meta property="og:type" content="website" />
@@ -13,7 +13,7 @@
     <meta property="og:title" content="Hyeongmin Kim" />
     <meta
       property="og:description"
-      content="Staff Engineer at Samsung Research — domain-informed AI, PHM, engineering design, knowledge graphs, and LLM/RAG agents."
+      content="Staff Engineer at Samsung Research — LLM behavior correction, domain-informed AI, PHM, engineering design, knowledge graphs, and LLM/RAG agents."
     />
     <meta property="og:image" content="https://www.hyeongminkim.com/assets/site/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="Hyeongmin Kim" />
     <meta
       name="twitter:description"
-      content="Staff Engineer at Samsung Research — domain-informed AI, PHM, engineering design, and LLM/RAG agents."
+      content="Staff Engineer at Samsung Research — LLM behavior correction, domain-informed AI, PHM, and LLM/RAG agents."
     />
     <meta name="twitter:image" content="https://www.hyeongminkim.com/assets/site/og.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -77,8 +77,10 @@
           <p class="intro secondary-intro">
             I started from mechanical engineering, spent my graduate and
             postdoctoral years studying PHM and domain-informed AI at Seoul
-            National University, and now work on practical AI systems that use
-            knowledge graphs, LLMs, and RAG.
+            National University, and now work on LLM behavior correction
+            &mdash; data selection and training techniques that fix how a model
+            behaves &mdash; alongside practical AI systems built on knowledge
+            graphs, LLMs, and RAG.
           </p>
           <div class="actions" aria-label="Profile links">
             <a class="button primary" href="mailto:960802@snu.ac.kr">Email</a>
@@ -124,9 +126,10 @@
           <p>
             I work where mechanical systems meet AI &mdash; turning messy
             engineering knowledge into systems that are easier to reason with,
-            search through, and actually use. My work spans prognostics &amp;
-            health management, domain-informed neural networks, design
-            optimization, and LLM-based engineering workflows.
+            search through, and actually use. My work spans LLM behavior
+            correction, prognostics &amp; health management, domain-informed
+            neural networks, design optimization, and LLM-based engineering
+            workflows.
           </p>
         </div>
       </section>
@@ -167,6 +170,9 @@
           <div class="skill-group">
             <p class="skill-cat">AI Systems</p>
             <div class="chips">
+              <span>LLM Behavior Correction</span>
+              <span>Post-training / PEFT</span>
+              <span>Training Data Selection</span>
               <span>LLM / RAG</span>
               <span>Knowledge Graphs</span>
               <span>LLM Agents</span>
@@ -203,8 +209,19 @@
         </p>
 
         <div class="research-grid">
+          <article class="research-area featured">
+            <span class="ra-num">01 &middot; Current focus</span>
+            <h3>Data-based BrainWash: LLM Behavior Correction</h3>
+            <p>Correcting specific unwanted behaviors of deployed LLMs at low cost through training techniques and careful data selection and composition &mdash; while preserving safety behavior and general capability.</p>
+            <ul class="ra-projects">
+              <li><span>Training techniques for targeted behavior correction (post-training, parameter-efficient fine-tuning)</span><span class="ra-tag">research</span></li>
+              <li><span>Data selection &amp; composition for correction training</span><span class="ra-tag">research</span></li>
+              <li><span>Side-effect evaluation &mdash; safety refusal, factuality, and general ability preservation</span><span class="ra-tag">research</span></li>
+            </ul>
+          </article>
+
           <article class="research-area">
-            <span class="ra-num">01</span>
+            <span class="ra-num">02</span>
             <h3>Prognostics &amp; Health Management</h3>
             <p>Fault diagnosis, anomaly detection, and predictive maintenance for rotating machines and thermal power plants.</p>
             <ul class="ra-projects">
@@ -228,7 +245,7 @@
           </article>
 
           <article class="research-area">
-            <span class="ra-num">02</span>
+            <span class="ra-num">03</span>
             <h3>Domain Knowledge Informed Neural Networks</h3>
             <p>Networks guided by physics, signal analysis, and expert priors &mdash; for generalization, physical consistency, and interpretability.</p>
             <ul class="ra-projects">
@@ -239,7 +256,7 @@
           </article>
 
           <article class="research-area">
-            <span class="ra-num">03</span>
+            <span class="ra-num">04</span>
             <h3>AI-driven Design</h3>
             <p>Generative design, performance prediction, and parameter / topology optimization via inverse modeling and reinforcement learning.</p>
             <ul class="ra-projects">
@@ -253,7 +270,7 @@
           </article>
 
           <article class="research-area">
-            <span class="ra-num">04</span>
+            <span class="ra-num">05</span>
             <h3>LLM Applications in Engineering</h3>
             <p>Domain-specialized LLMs, knowledge graphs, and RAG workflows for engineering design and signal analysis.</p>
             <ul class="ra-projects">

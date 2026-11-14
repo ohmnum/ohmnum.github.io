@@ -991,6 +991,15 @@ h3 {
   opacity: 1;
 }
 
+.research-area.featured {
+  grid-column: 1 / -1;
+  border-color: var(--accent);
+}
+
+.research-area.featured::before {
+  opacity: 1;
+}
+
 .ra-num {
   color: var(--rust);
   font-size: 0.82rem;
@@ -1065,6 +1074,14 @@ h3 {
   border-top: 1px solid var(--line);
   margin-top: 30px;
   padding-top: 30px;
+}
+
+.rd-goal {
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-weight: 600;
+  margin: 14px 0 0;
+  padding: 6px 0 6px 14px;
 }
 
 .rd-area:first-of-type {

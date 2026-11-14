@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Research by Hyeongmin Kim — PHM, domain-informed neural networks, AI-driven design, and LLM applications in engineering, with key papers explained."
+      content="Research by Hyeongmin Kim — LLM behavior correction, PHM, domain-informed neural networks, AI-driven design, and LLM applications in engineering, with key papers explained."
     />
     <title>Research - Hyeongmin Kim</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -46,18 +46,40 @@
         <p class="eyebrow"><a class="back-link" href="index.html">&larr; Home</a></p>
         <h1>Research</h1>
         <p class="intro">
-          My work connects mechanical/electrical systems with AI &mdash; from
-          prognostics &amp; health management to domain-informed neural networks,
-          AI-driven design, and LLM-based engineering workflows. Below is what
+          My current focus is correcting LLM behavior through training
+          techniques and data selection. Before that, my work connected
+          mechanical/electrical systems with AI &mdash; from prognostics &amp;
+          health management to domain-informed neural networks, AI-driven
+          design, and LLM-based engineering workflows. Below is what
           each theme means and the key papers behind it. The full list is on the
           <a class="inline-link" href="publications.html">publications</a> page.
         </p>
       </section>
 
       <section class="section subpage-body">
-        <!-- 01 PHM -->
+        <!-- 01 BrainWash -->
+        <article class="rd-area" id="brainwash">
+          <div class="rd-head"><span class="ra-num">01</span><h2>Data-based BrainWash: LLM Behavior Correction</h2></div>
+          <p class="rd-blurb">
+            My current focus at Samsung Research. Deployed LLMs often show
+            specific behaviors we want to change &mdash; unnecessary refusals,
+            evasive or preachy answers, missing key facts. Retraining from
+            scratch is too expensive, and naive fine-tuning tends to break
+            other things. BrainWash studies how to correct a targeted behavior
+            cheaply through <em>training techniques</em> and <em>what data the
+            model is trained on</em>.
+          </p>
+          <ul class="rd-points">
+            <li><b>Training techniques</b> &mdash; low-cost post-training and parameter-efficient fine-tuning designed for narrow, targeted behavior correction.</li>
+            <li><b>Data selection &amp; composition</b> &mdash; choosing, constructing, and mixing correction data so the model learns the intended behavior and nothing else.</li>
+            <li><b>Side-effect control</b> &mdash; correction must not erode legitimate safety refusals, factuality, or general ability; each change is measured on all of these axes.</li>
+          </ul>
+          <p class="rd-goal">Goal: target behavior &darr; &nbsp;&middot;&nbsp; factuality &amp; completeness &uarr; &nbsp;&middot;&nbsp; safety and general ability preserved.</p>
+        </article>
+
+        <!-- 02 PHM -->
         <article class="rd-area" id="phm">
-          <div class="rd-head"><span class="ra-num">01</span><h2>Prognostics &amp; Health Management</h2></div>
+          <div class="rd-head"><span class="ra-num">02</span><h2>Prognostics &amp; Health Management</h2></div>
           <p class="rd-blurb">
             PHM monitors, evaluates, and predicts the health of mechanical,
             electrical, and industrial systems &mdash; so faults are caught early,
@@ -119,9 +141,9 @@
           </ol>
         </article>
 
-        <!-- 02 DINN -->
+        <!-- 03 DINN -->
         <article class="rd-area" id="dinn">
-          <div class="rd-head"><span class="ra-num">02</span><h2>Domain Knowledge Informed Neural Networks</h2></div>
+          <div class="rd-head"><span class="ra-num">03</span><h2>Domain Knowledge Informed Neural Networks</h2></div>
           <p class="rd-blurb">
             End-to-end deep learning on engineering data often ignores what
             engineers already know. DINN folds that domain knowledge &mdash;
@@ -140,9 +162,9 @@
           </ol>
         </article>
 
-        <!-- 03 AI-driven Design -->
+        <!-- 04 AI-driven Design -->
         <article class="rd-area" id="design">
-          <div class="rd-head"><span class="ra-num">03</span><h2>AI-driven Design</h2></div>
+          <div class="rd-head"><span class="ra-num">04</span><h2>AI-driven Design</h2></div>
           <p class="rd-blurb">
             Using AI across the design loop &mdash; generating candidate designs,
             predicting performance faster than simulation, and optimizing
@@ -167,11 +189,11 @@
           </ol>
         </article>
 
-        <!-- 04 LLM -->
+        <!-- 05 LLM -->
         <article class="rd-area" id="llm">
-          <div class="rd-head"><span class="ra-num">04</span><h2>LLM Applications in Engineering</h2></div>
+          <div class="rd-head"><span class="ra-num">05</span><h2>LLM Applications in Engineering</h2></div>
           <p class="rd-blurb">
-            My current focus at Samsung Research: domain-specialized LLMs,
+            Domain-specialized LLMs,
             knowledge graphs, and retrieval-augmented generation (RAG) that bring
             engineering data and physical reasoning into one workflow.
           </p>
