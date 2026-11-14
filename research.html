@@ -50,7 +50,8 @@
           to act. I started by building physics and expert knowledge into
           neural networks for engineering systems (DINN). Now I shape how LLMs
           behave through the data they learn from (Data-based BrainWash).
-          Below is what
+          Knowledge goes in three ways: through data (01), structure (02), and
+          retrieval (03). The application areas follow. Below is what
           each theme means and the key papers behind it. The full list is on the
           <a class="inline-link" href="publications.html">publications</a> page.
         </p>
@@ -77,9 +78,62 @@
           <p class="rd-goal">Goal: target behavior &darr; &nbsp;&middot;&nbsp; factuality &amp; completeness &uarr; &nbsp;&middot;&nbsp; safety and general ability preserved.</p>
         </article>
 
-        <!-- 02 PHM -->
+        <!-- 02 DINN -->
+        <article class="rd-area" id="dinn">
+          <div class="rd-head"><span class="ra-num">02</span><h2>Domain Knowledge Informed Neural Networks</h2></div>
+          <p class="rd-blurb">
+            End-to-end deep learning on engineering data often ignores what
+            engineers already know. DINN folds that domain knowledge &mdash;
+            physics, signal analysis, expert rules &mdash; back into the model.
+          </p>
+          <ul class="rd-points">
+            <li><b>Problems it fixes</b> &mdash; low generalization (sensitive to noise/conditions), black-box opacity, and physically inconsistent outputs.</li>
+            <li><b>How</b> &mdash; training across simulated multi-condition data (generalization), physics-based loss terms / PINNs (physical consistency), and signal-aware inputs such as 2D time&ndash;frequency maps (interpretability).</li>
+          </ul>
+          <ol class="paper-list">
+            <li class="paper">
+              <h3>Domain Knowledge-Informed Neural Networks for Prognostics and Health Management: A State-of-the-Art Review and Taxonomy</h3>
+              <p class="paper-meta"><span class="ra-tag pub">Archives of Computational Methods in Engineering &rsquo;26 (accepted)</span><span class="paper-role">First author</span></p>
+              <p class="paper-desc">Defines DINN, organizes the ways physics, signal analysis, and expert rules can be fused into PHM models, analyzes their limits, and maps out open directions.</p>
+            </li>
+          </ol>
+        </article>
+
+        <!-- 03 LLM -->
+        <article class="rd-area" id="llm">
+          <div class="rd-head"><span class="ra-num">03</span><h2>Knowledge Graphs &amp; Retrieval</h2></div>
+          <p class="rd-blurb">
+            The third way to get knowledge into a model: instead of training it
+            in, structure it as a graph and let the model look it up when it
+            answers. Knowledge graphs and retrieval-augmented generation (RAG)
+            bring domain data and reasoning into one workflow.
+          </p>
+          <ul class="rd-points">
+            <li><b>Where LLMs help</b> &mdash; design generation, end-to-end process automation, and integrating human/physics feedback.</li>
+            <li><b>Building a domain LLM</b> &mdash; (1) curate engineering datasets for fine-tuning &amp; RAG, (2) handle multi-modal data (CAD, simulation, sensor signals), (3) deploy in workflows that stay aligned with physical principles.</li>
+          </ul>
+          <ol class="paper-list">
+            <li class="paper">
+              <h3>OrcheRAG: multi-constraint product search</h3>
+              <p class="paper-meta"><span class="ra-tag">project</span></p>
+              <p class="paper-desc">A GraphRAG-based product search system for queries with several conditions at once. It filters candidates by each condition at the retrieval stage, before generation, so the answer satisfies every requirement in the query.</p>
+            </li>
+            <li class="paper">
+              <h3>LLM-based engineering design framework</h3>
+              <p class="paper-meta"><span class="ra-tag">in development</span></p>
+              <p class="paper-desc">An LLM workflow that generates designs and folds in feedback to fit user requirements while respecting physical constraints &mdash; bridging today&rsquo;s fragmented, rigid, and slow design-tool chains.</p>
+            </li>
+            <li class="paper">
+              <h3>Knowledge-graph + RAG + LLM for PHM</h3>
+              <p class="paper-meta"><span class="ra-tag">research</span></p>
+              <p class="paper-desc">Represents fault-related knowledge as a graph and keeps a PHM assistant accurate and current by combining RAG with LLMs &mdash; tackling the black-box reasoning, slow retrieval, and limited access to unstructured maintenance data that plain models struggle with.</p>
+            </li>
+          </ol>
+        </article>
+
+        <!-- 04 PHM -->
         <article class="rd-area" id="phm">
-          <div class="rd-head"><span class="ra-num">02</span><h2>Prognostics &amp; Health Management</h2></div>
+          <div class="rd-head"><span class="ra-num">04</span><h2>Prognostics &amp; Health Management</h2></div>
           <p class="rd-blurb">
             PHM monitors, evaluates, and predicts the health of mechanical,
             electrical, and industrial systems &mdash; so faults are caught early,
@@ -141,30 +195,9 @@
           </ol>
         </article>
 
-        <!-- 03 DINN -->
-        <article class="rd-area" id="dinn">
-          <div class="rd-head"><span class="ra-num">03</span><h2>Domain Knowledge Informed Neural Networks</h2></div>
-          <p class="rd-blurb">
-            End-to-end deep learning on engineering data often ignores what
-            engineers already know. DINN folds that domain knowledge &mdash;
-            physics, signal analysis, expert rules &mdash; back into the model.
-          </p>
-          <ul class="rd-points">
-            <li><b>Problems it fixes</b> &mdash; low generalization (sensitive to noise/conditions), black-box opacity, and physically inconsistent outputs.</li>
-            <li><b>How</b> &mdash; training across simulated multi-condition data (generalization), physics-based loss terms / PINNs (physical consistency), and signal-aware inputs such as 2D time&ndash;frequency maps (interpretability).</li>
-          </ul>
-          <ol class="paper-list">
-            <li class="paper">
-              <h3>Domain Knowledge-Informed Neural Networks for Prognostics and Health Management: A State-of-the-Art Review and Taxonomy</h3>
-              <p class="paper-meta"><span class="ra-tag pub">Archives of Computational Methods in Engineering &rsquo;26 (accepted)</span><span class="paper-role">First author</span></p>
-              <p class="paper-desc">Defines DINN, organizes the ways physics, signal analysis, and expert rules can be fused into PHM models, analyzes their limits, and maps out open directions.</p>
-            </li>
-          </ol>
-        </article>
-
-        <!-- 04 AI-driven Design -->
+        <!-- 05 AI-driven Design -->
         <article class="rd-area" id="design">
-          <div class="rd-head"><span class="ra-num">04</span><h2>AI-driven Design</h2></div>
+          <div class="rd-head"><span class="ra-num">05</span><h2>AI-driven Design</h2></div>
           <p class="rd-blurb">
             Using AI across the design loop &mdash; generating candidate designs,
             predicting performance faster than simulation, and optimizing
@@ -185,32 +218,6 @@
               <h3>Reinforcement-learning-based optimal parameter estimation of an ultra-precision machine</h3>
               <p class="paper-meta"><span class="ra-tag">ICEAS &rsquo;22</span><span class="paper-role">First author</span></p>
               <p class="paper-desc">Frames process-parameter tuning of an ultra-precision machine as a reinforcement-learning problem to reach optimal settings efficiently.</p>
-            </li>
-          </ol>
-        </article>
-
-        <!-- 05 LLM -->
-        <article class="rd-area" id="llm">
-          <div class="rd-head"><span class="ra-num">05</span><h2>LLM Applications in Engineering</h2></div>
-          <p class="rd-blurb">
-            Domain-specialized LLMs,
-            knowledge graphs, and retrieval-augmented generation (RAG) that bring
-            engineering data and physical reasoning into one workflow.
-          </p>
-          <ul class="rd-points">
-            <li><b>Where LLMs help</b> &mdash; design generation, end-to-end process automation, and integrating human/physics feedback.</li>
-            <li><b>Building a domain LLM</b> &mdash; (1) curate engineering datasets for fine-tuning &amp; RAG, (2) handle multi-modal data (CAD, simulation, sensor signals), (3) deploy in workflows that stay aligned with physical principles.</li>
-          </ul>
-          <ol class="paper-list">
-            <li class="paper">
-              <h3>LLM-based engineering design framework</h3>
-              <p class="paper-meta"><span class="ra-tag">in development</span></p>
-              <p class="paper-desc">An LLM workflow that generates designs and folds in feedback to fit user requirements while respecting physical constraints &mdash; bridging today&rsquo;s fragmented, rigid, and slow design-tool chains.</p>
-            </li>
-            <li class="paper">
-              <h3>Knowledge-graph + RAG + LLM for PHM</h3>
-              <p class="paper-meta"><span class="ra-tag">research</span></p>
-              <p class="paper-desc">Represents fault-related knowledge as a graph and keeps a PHM assistant accurate and current by combining RAG with LLMs &mdash; tackling the black-box reasoning, slow retrieval, and limited access to unstructured maintenance data that plain models struggle with.</p>
             </li>
           </ol>
         </article>
