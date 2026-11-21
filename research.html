@@ -104,13 +104,14 @@
           <div class="rd-head"><span class="ra-num">03</span><h2>Knowledge Graphs &amp; Retrieval</h2></div>
           <p class="rd-blurb">
             The third way to get knowledge into a model: instead of training it
-            in, structure it as a graph and let the model look it up when it
-            answers. Knowledge graphs and retrieval-augmented generation (RAG)
-            bring domain data and reasoning into one workflow.
+            in, let the model look it up when it answers. Plain retrieval returns
+            text that resembles the question; I use the structure of the knowledge
+            itself, such as graphs, document hierarchies, citations, and attributes,
+            so the answer is complete and every condition holds.
           </p>
           <ul class="rd-points">
-            <li><b>Why a graph</b> &mdash; products, faults, and procedures are linked to each other; a graph keeps those links so retrieval can follow them instead of matching loose text.</li>
-            <li><b>What I focus on</b> &mdash; getting the right facts into the model&rsquo;s context before it answers, especially for questions with several conditions at once.</li>
+            <li><b>Why structure</b> &mdash; products, parts, procedures, and rules are linked to each other; keeping those links lets retrieval follow them instead of matching loose text.</li>
+            <li><b>What I focus on</b> &mdash; questions whose answer is a set or must meet several conditions at once, where similarity search alone misses members or returns ones that do not fit.</li>
           </ul>
           <ol class="paper-list">
             <li class="paper">
